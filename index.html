@@ -119,7 +119,7 @@
   .actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 32px; }
   @media (max-width: 479px) { .actions .btn { width: 100%; } }
 
-  .portrait { position: relative; width: 140px; margin: 0; }
+  .portrait { position: relative; width: 140px; height: fit-content; margin: 0; }
   @media (min-width: 640px) { .portrait { width: 200px; } }
   @media (min-width: 1024px) {
     .portrait { width: 150px; margin-bottom: 16px; }
@@ -174,6 +174,20 @@
   .block h2 { font-size: clamp(1.75rem, 3.6vw, 2.5rem); line-height: 1.15; }
   .prose { max-width: 62ch; display: grid; gap: 20px; }
 
+  .companies { display: grid; gap: 32px; }
+  @media (min-width: 640px) { .companies { grid-template-columns: 1fr 1fr; gap: 40px; } }
+  .group-label {
+    font: 500 0.8125rem/1.4 "IBM Plex Mono", ui-monospace, monospace;
+    letter-spacing: 0.04em; text-transform: uppercase; color: var(--primary); margin-bottom: 8px;
+  }
+  .company-list { list-style: none; margin: 0; padding: 0; }
+  .company-list li {
+    padding: 14px 0; border-bottom: 1px solid var(--line);
+    font: 600 1.25rem/1.3 "Bitter", Georgia, serif; color: var(--ink-strong);
+  }
+  .company-list li:first-child { border-top: 1px solid var(--line); }
+  .company-list small { display: block; margin-top: 2px; font: 400 0.9375rem/1.4 "Work Sans", system-ui, sans-serif; color: var(--ink-soft); }
+
   .topics { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--line); counter-reset: topic; }
   .topic {
     display: grid; gap: 8px 24px; padding: 28px 0; border-bottom: 1px solid var(--line);
@@ -203,6 +217,7 @@
     <div class="nav-right">
       <ul class="nav-links">
         <li><a href="#tentang" data-i18n="navAbout">Tentang</a></li>
+        <li><a href="#pengalaman" data-i18n="navExp">Pengalaman</a></li>
         <li><a href="#topik" data-i18n="navTopics">Topik</a></li>
         <li><a href="https://www.udemy.com/user/timotius-pamungkas" target="_blank" rel="noopener">Udemy</a></li>
       </ul>
@@ -256,6 +271,27 @@
     </div>
   </section>
 
+  <section class="block" id="pengalaman" aria-labelledby="exp-h">
+    <div class="split">
+      <h2 id="exp-h" data-i18n="expTitle">Pengalaman</h2>
+      <div class="companies">
+        <div>
+          <p class="group-label" data-i18n="expNow">Saat ini</p>
+          <ul class="company-list">
+            <li>BFI Finance Indonesia</li>
+          </ul>
+        </div>
+        <div>
+          <p class="group-label" data-i18n="expPast">Sebelumnya</p>
+          <ul class="company-list">
+            <li>Tokopedia</li>
+            <li>FIFGROUP <small>Astra Financial</small></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <section class="block" id="topik" aria-labelledby="topics-h">
     <div class="split">
       <h2 id="topics-h" data-i18n="topicsTitle">Yang saya ajarkan</h2>
@@ -299,7 +335,8 @@
   const copy = {
     id: {
       skip: "Langsung ke konten",
-      navAbout: "Tentang", navTopics: "Topik",
+      navAbout: "Tentang", navExp: "Pengalaman", navTopics: "Topik",
+      expTitle: "Pengalaman", expNow: "Saat ini", expPast: "Sebelumnya",
       eyebrow: "Instruktur Udemy",
       lead: "System architect dan engineering manager yang mengajar dari pengalaman nyata di dunia kerja.",
       ctaUdemy: "Lihat kursus saya di Udemy", ctaAbout: "Tentang saya",
@@ -323,7 +360,8 @@
     },
     en: {
       skip: "Skip to content",
-      navAbout: "About", navTopics: "Topics",
+      navAbout: "About", navExp: "Experience", navTopics: "Topics",
+      expTitle: "Experience", expNow: "Current", expPast: "Previously",
       eyebrow: "Udemy instructor",
       lead: "A system architect and engineering manager who teaches from real-world experience.",
       ctaUdemy: "See my courses on Udemy", ctaAbout: "About me",
