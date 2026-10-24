@@ -1,11 +1,375 @@
 <!doctype html>
-<html lang="en">
+<html lang="id">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Timotius Pamungkas</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Timotius Pamungkas</title>
+<meta name="description" content="Timotius Pamungkas: system architect dan engineering manager yang mengajar software engineering, AI & otomasi, serta cloud & DevOps di Udemy.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bitter:wght@600;700&family=Work+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cerulean: #0081A7;
+    --tropical-teal: #00AFB9;
+    --light-yellow: #FDFCDC;
+    --soft-apricot: #FED9B7;
+    --vibrant-coral: #F07167;
+    --deep-sea: #123A47;
+
+    --paper: var(--light-yellow);
+    --card: color-mix(in srgb, var(--soft-apricot) 45%, var(--light-yellow) 55%);
+    --ink: color-mix(in srgb, var(--deep-sea) 88%, var(--light-yellow) 12%);
+    --ink-strong: var(--deep-sea);
+    --ink-soft: color-mix(in srgb, var(--deep-sea) 78%, var(--light-yellow) 22%);
+    --line: color-mix(in srgb, var(--deep-sea) 16%, transparent);
+    --primary: color-mix(in srgb, var(--cerulean) 82%, var(--deep-sea) 18%);
+    --primary-hover: color-mix(in srgb, var(--cerulean) 55%, var(--deep-sea) 45%);
+    --on-primary: var(--light-yellow);
+    --accent: var(--vibrant-coral);
+    --mark: var(--soft-apricot);
+    --focus: var(--tropical-teal);
+    --shadow: 0 1px 2px color-mix(in srgb, var(--deep-sea) 10%, transparent), 0 8px 24px color-mix(in srgb, var(--deep-sea) 10%, transparent);
+    color-scheme: light;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font: 400 1rem/1.6 "Work Sans", system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  @media (min-width: 768px) { body { font-size: 1.125rem; } }
+  img { display: block; max-width: 100%; }
+  h1, h2, h3 { font-family: "Bitter", Georgia, serif; color: var(--ink-strong); margin: 0; }
+  p { margin: 0; }
+  a { color: var(--primary); text-decoration-thickness: 1px; text-underline-offset: 3px; }
+  a:hover { text-decoration-thickness: 2px; }
+  :focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; border-radius: 4px; }
+
+  .wrap { width: 100%; max-width: 1080px; margin: 0 auto; padding: 0 16px; }
+  @media (min-width: 768px) { .wrap { padding: 0 24px; } }
+
+  .skip {
+    position: absolute; left: 16px; top: -48px; z-index: 10;
+    background: var(--primary); color: var(--on-primary);
+    padding: 8px 16px; border-radius: 6px; text-decoration: none;
+  }
+  .skip:focus { top: 12px; }
+
+  /* Header */
+  header { border-bottom: 1px solid var(--line); }
+  .nav { display: flex; align-items: center; justify-content: space-between; gap: 16px; height: 64px; }
+  .brand { font-family: "Bitter", Georgia, serif; font-weight: 700; font-size: 1.0625rem; color: var(--ink-strong); text-decoration: none; }
+  .nav-right { display: flex; align-items: center; gap: 24px; }
+  .nav-links { display: none; gap: 24px; list-style: none; margin: 0; padding: 0; }
+  .nav-links a { color: var(--ink); text-decoration: none; font-size: 0.9375rem; font-weight: 500; }
+  .nav-links a:hover { color: var(--ink-strong); text-decoration: underline; }
+  @media (min-width: 768px) { .nav-links { display: flex; } }
+  .controls { display: flex; align-items: center; gap: 8px; }
+  .lang { display: inline-flex; border: 1.5px solid var(--line); border-radius: 6px; overflow: hidden; }
+  .lang button {
+    font: 500 0.8125rem/1 "IBM Plex Mono", ui-monospace, monospace;
+    color: var(--ink); background: transparent; border: 0; cursor: pointer;
+    min-width: 40px; height: 36px; padding: 0 10px;
+  }
+  .lang button[aria-pressed="true"] { background: var(--primary); color: var(--on-primary); }
+
+  /* Buttons */
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+    height: 48px; padding: 0 22px; border-radius: 6px;
+    font: 600 1rem/1 "Work Sans", system-ui, sans-serif; text-decoration: none;
+    transition: background-color .15s ease, border-color .15s ease;
+  }
+  .btn svg { width: 18px; height: 18px; flex: none; }
+  .btn-primary { background: var(--primary); color: var(--on-primary); }
+  .btn-primary:hover { background: var(--primary-hover); }
+  .btn-secondary { color: var(--ink-strong); border: 1.5px solid var(--ink); }
+  .btn-secondary:hover { background: color-mix(in srgb, var(--ink) 8%, transparent); }
+
+  /* Layout: stacked on phone/tablet, two panes on desktop */
+  .layout { display: grid; }
+  @media (min-width: 1024px) {
+    .layout { grid-template-columns: minmax(320px, 400px) 1fr; gap: 80px; align-items: start; }
+    .intro {
+      position: sticky; top: 0; min-height: calc(100vh - 65px);
+      display: flex; flex-direction: column; justify-content: center; padding: 48px 0;
+    }
+  }
+
+  /* Intro pane */
+  .intro { padding: 40px 0 48px; display: grid; gap: 32px; }
+  @media (min-width: 640px) and (max-width: 1023px) {
+    .intro { grid-template-columns: 1fr auto; align-items: center; gap: 48px; padding: 64px 0; }
+    .intro .portrait { order: 2; }
+  }
+  .eyebrow {
+    font: 500 0.8125rem/1.4 "IBM Plex Mono", ui-monospace, monospace;
+    letter-spacing: 0.04em; text-transform: uppercase; color: var(--primary);
+    margin-bottom: 16px;
+  }
+  .intro h1 { font-size: clamp(2.5rem, 6vw, 3.25rem); line-height: 1.05; letter-spacing: -0.01em; }
+  .intro h1 .mark { background: linear-gradient(transparent 62%, var(--mark) 62%); padding: 0 2px; }
+  .lead { margin-top: 20px; font-size: clamp(1.125rem, 2.4vw, 1.25rem); line-height: 1.45; max-width: 34ch; color: var(--ink); }
+  .actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 32px; }
+  @media (max-width: 479px) { .actions .btn { width: 100%; } }
+
+  .portrait { position: relative; width: 140px; margin: 0; }
+  @media (min-width: 640px) { .portrait { width: 200px; } }
+  @media (min-width: 1024px) {
+    .portrait { width: 150px; margin-bottom: 16px; }
+    .intro { padding: 32px 0; }
+    .intro .lead { margin-top: 16px; }
+    .intro .actions { margin-top: 24px; }
+    .intro .btn-secondary { display: none; }
+  }
+  @media (min-width: 1024px) and (max-height: 640px) { .intro { position: static; min-height: 0; } }
+  .portrait::before {
+    content: ""; position: absolute; inset: 12px -10px -10px 12px;
+    border-radius: 14px; background: var(--accent); opacity: .55;
+  }
+  .portrait img {
+    position: relative; width: 100%; height: auto; aspect-ratio: 4 / 5; object-fit: cover; object-position: 50% 18%;
+    border-radius: 14px; background: #fff; box-shadow: var(--shadow);
+  }
+
+  /* Content pane */
+  @media (min-width: 1024px) { .content { padding: 64px 0 96px; border-left: 1px solid var(--line); padding-left: 80px; margin-left: -40px; } }
+
+  /* Stats */
+  .stats { border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+  @media (min-width: 1024px) { .stats { border-top: 0; } }
+  .stats dl { display: grid; grid-template-columns: repeat(2, 1fr); margin: 0; }
+  @media (min-width: 640px) { .stats dl { grid-template-columns: repeat(4, 1fr); } }
+  .stat { padding: 24px 16px 24px 0; }
+  .stat:nth-child(2n) { padding-left: 16px; border-left: 1px solid var(--line); }
+  @media (max-width: 639px) { .stat:nth-child(n+3) { border-top: 1px solid var(--line); } }
+  @media (min-width: 640px) {
+    .stat { padding: 24px 16px; }
+    .stat:first-child { padding-left: 0; }
+    .stat + .stat { border-left: 1px solid var(--line); }
+  }
+  @media (min-width: 1024px) {
+    .stats dl { grid-template-columns: repeat(2, 1fr); }
+    .stat, .stat:first-child { padding: 24px 24px 24px 0; }
+    .stat:nth-child(-n+2) { padding-top: 0; }
+    .stat:nth-child(2n) { padding-left: 24px; }
+    .stat:nth-child(3) { border-left: 0; }
+    .stat:nth-child(n+3) { border-top: 1px solid var(--line); }
+  }
+  .stat dd { margin: 0; font: 700 clamp(1.75rem, 3.4vw, 2.25rem)/1.1 "Bitter", Georgia, serif; color: var(--ink-strong); }
+  .stat dt { margin-top: 6px; font-size: 0.9375rem; line-height: 1.4; color: var(--ink-soft); }
+  .stat { display: flex; flex-direction: column-reverse; justify-content: flex-end; }
+
+  /* Sections */
+  section.block { padding: 64px 0 0; }
+  @media (min-width: 768px) { section.block { padding-top: 80px; } }
+  .content > :last-child { padding-bottom: 64px; }
+  .split { display: grid; gap: 24px; }
+  .block h2 { font-size: clamp(1.75rem, 3.6vw, 2.5rem); line-height: 1.15; }
+  .prose { max-width: 62ch; display: grid; gap: 20px; }
+
+  .topics { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--line); counter-reset: topic; }
+  .topic {
+    display: grid; gap: 8px 24px; padding: 28px 0; border-bottom: 1px solid var(--line);
+    counter-increment: topic;
+  }
+  @media (min-width: 768px) { .topic { grid-template-columns: 48px 1fr auto; align-items: baseline; padding: 28px 0; } }
+  .topic::before {
+    content: counter(topic, decimal-leading-zero);
+    font: 500 0.875rem/1.6 "IBM Plex Mono", ui-monospace, monospace; color: var(--ink-soft);
+  }
+  .topic h3 { font-size: 1.375rem; line-height: 1.3; margin-bottom: 6px; }
+  .topic p { max-width: 56ch; }
+  .topic a { font-weight: 600; white-space: nowrap; }
+
+  .note { margin-top: 12px; font-size: 0.9375rem; line-height: 1.5; color: var(--ink-soft); max-width: 36ch; }
+
+  footer { border-top: 1px solid var(--line); padding: 32px 0; font-size: 0.9375rem; color: var(--ink-soft); }
+  .foot { display: flex; flex-wrap: wrap; gap: 8px 24px; justify-content: space-between; }
+</style>
 </head>
 <body>
-  <h1>Timotius Pamungkas</h1>
+<a class="skip" href="#main" data-i18n="skip">Langsung ke konten</a>
+
+<header>
+  <div class="wrap nav">
+    <a class="brand" href="#top">Timotius Pamungkas</a>
+    <div class="nav-right">
+      <ul class="nav-links">
+        <li><a href="#tentang" data-i18n="navAbout">Tentang</a></li>
+        <li><a href="#topik" data-i18n="navTopics">Topik</a></li>
+        <li><a href="https://www.udemy.com/user/timotius-pamungkas" target="_blank" rel="noopener">Udemy</a></li>
+      </ul>
+      <div class="controls">
+        <div class="lang" role="group" aria-label="Bahasa / Language">
+          <button type="button" data-lang="id" aria-pressed="true" lang="id" aria-label="Bahasa Indonesia">ID</button>
+          <button type="button" data-lang="en" aria-pressed="false" lang="en" aria-label="English">EN</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main id="main" class="wrap layout">
+  <section class="intro" id="top" aria-label="Timotius Pamungkas">
+      <figure class="portrait">
+        <img src="photo.jpeg" width="902" height="1600" alt="Foto Timotius Pamungkas" data-i18n-alt="photoAlt">
+      </figure>
+      <div>
+        <p class="eyebrow" data-i18n="eyebrow">Instruktur Udemy</p>
+        <h1>Timotius <span class="mark">Pamungkas</span></h1>
+        <p class="lead" data-i18n="lead">System architect dan engineering manager yang mengajar dari pengalaman nyata di dunia kerja.</p>
+        <div class="actions">
+          <a class="btn btn-primary" href="https://www.udemy.com/user/timotius-pamungkas" target="_blank" rel="noopener">
+            <span data-i18n="ctaUdemy">Lihat kursus saya di Udemy</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"/></svg>
+          </a>
+          <a class="btn btn-secondary" href="#tentang" data-i18n="ctaAbout">Tentang saya</a>
+        </div>
+        <p class="note" data-i18n="ctaBody">Semua kursus saya ada di satu tempat. Pilih topik yang Anda butuhkan sekarang.</p>
+      </div>
+  </section>
+
+  <div class="content">
+  <div class="stats">
+      <dl>
+        <div class="stat"><dt data-i18n="statTech">tahun membangun teknologi di industri keuangan</dt><dd>20+</dd></div>
+        <div class="stat"><dt data-i18n="statTeach">tahun mengajar</dt><dd>8+</dd></div>
+        <div class="stat"><dt data-i18n="statStudents">siswa di Udemy</dt><dd data-i18n="numStudents">65.000+</dd></div>
+        <div class="stat"><dt data-i18n="statCourses">kursus online</dt><dd>25+</dd></div>
+      </dl>
+  </div>
+
+  <section class="block" id="tentang" aria-labelledby="about-h">
+    <div class="split">
+      <h2 id="about-h" data-i18n="aboutTitle">Tentang saya</h2>
+      <div class="prose">
+        <p data-i18n="about1">Saya sudah lebih dari 20 tahun membangun teknologi di industri keuangan, dan sekarang berperan sebagai system architect dan engineering manager. Yang saya ajarkan adalah hal yang saya pakai sendiri di proyek nyata: merancang sistem, menulis kode yang mudah dirawat, dan menjalankannya di cloud.</p>
+        <p data-i18n="about2">Saya berbasis di Indonesia dan sudah mengajar lebih dari 8 tahun. Setiap materi saya susun dari pengalaman di lapangan, supaya yang Anda pelajari bisa langsung dipakai di pekerjaan.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="topik" aria-labelledby="topics-h">
+    <div class="split">
+      <h2 id="topics-h" data-i18n="topicsTitle">Yang saya ajarkan</h2>
+      <ol class="topics">
+        <li class="topic">
+          <div>
+            <h3 data-i18n="t1Title">Software engineering</h3>
+            <p data-i18n="t1Body">Dari dasar yang kuat sampai arsitektur: bahasa pemrograman, desain sistem, dan praktik yang dipakai tim profesional.</p>
+          </div>
+          <a href="https://www.udemy.com/user/timotius-pamungkas" target="_blank" rel="noopener" data-i18n="seeCourses">Lihat kursus</a>
+        </li>
+        <li class="topic">
+          <div>
+            <h3 data-i18n="t2Title">AI &amp; otomasi</h3>
+            <p data-i18n="t2Body">Memakai AI generatif dan otomasi untuk menyelesaikan pekerjaan nyata dengan lebih cepat.</p>
+          </div>
+          <a href="https://www.udemy.com/user/timotius-pamungkas" target="_blank" rel="noopener" data-i18n="seeCourses">Lihat kursus</a>
+        </li>
+        <li class="topic">
+          <div>
+            <h3 data-i18n="t3Title">Cloud &amp; DevOps</h3>
+            <p data-i18n="t3Body">Container, CI/CD, dan infrastruktur cloud: cara membawa aplikasi dari laptop sampai ke produksi.</p>
+          </div>
+          <a href="https://www.udemy.com/user/timotius-pamungkas" target="_blank" rel="noopener" data-i18n="seeCourses">Lihat kursus</a>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  </div>
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <span>&copy; <span id="year">2026</span> Timotius Pamungkas</span>
+    <a href="https://www.udemy.com/user/timotius-pamungkas" target="_blank" rel="noopener" data-i18n="footUdemy">Profil Udemy</a>
+  </div>
+</footer>
+
+<script>
+  const copy = {
+    id: {
+      skip: "Langsung ke konten",
+      navAbout: "Tentang", navTopics: "Topik",
+      eyebrow: "Instruktur Udemy",
+      lead: "System architect dan engineering manager yang mengajar dari pengalaman nyata di dunia kerja.",
+      ctaUdemy: "Lihat kursus saya di Udemy", ctaAbout: "Tentang saya",
+      photoAlt: "Foto Timotius Pamungkas",
+      statTech: "tahun membangun teknologi di industri keuangan", statTeach: "tahun mengajar",
+      statStudents: "siswa di Udemy", numStudents: "65.000+", statCourses: "kursus online",
+      aboutTitle: "Tentang saya",
+      about1: "Saya sudah lebih dari 20 tahun membangun teknologi di industri keuangan, dan sekarang berperan sebagai system architect dan engineering manager. Yang saya ajarkan adalah hal yang saya pakai sendiri di proyek nyata: merancang sistem, menulis kode yang mudah dirawat, dan menjalankannya di cloud.",
+      about2: "Saya berbasis di Indonesia dan sudah mengajar lebih dari 8 tahun. Setiap materi saya susun dari pengalaman di lapangan, supaya yang Anda pelajari bisa langsung dipakai di pekerjaan.",
+      topicsTitle: "Yang saya ajarkan",
+      t1Title: "Software engineering",
+      t1Body: "Dari dasar yang kuat sampai arsitektur: bahasa pemrograman, desain sistem, dan praktik yang dipakai tim profesional.",
+      t2Title: "AI &amp; otomasi",
+      t2Body: "Memakai AI generatif dan otomasi untuk menyelesaikan pekerjaan nyata dengan lebih cepat.",
+      t3Title: "Cloud &amp; DevOps",
+      t3Body: "Container, CI/CD, dan infrastruktur cloud: cara membawa aplikasi dari laptop sampai ke produksi.",
+      seeCourses: "Lihat kursus",
+      ctaBody: "Semua kursus saya ada di satu tempat. Pilih topik yang Anda butuhkan sekarang.",
+      footUdemy: "Profil Udemy",
+      description: "Timotius Pamungkas: system architect dan engineering manager yang mengajar software engineering, AI & otomasi, serta cloud & DevOps di Udemy."
+    },
+    en: {
+      skip: "Skip to content",
+      navAbout: "About", navTopics: "Topics",
+      eyebrow: "Udemy instructor",
+      lead: "A system architect and engineering manager who teaches from real-world experience.",
+      ctaUdemy: "See my courses on Udemy", ctaAbout: "About me",
+      photoAlt: "Photo of Timotius Pamungkas",
+      statTech: "years building tech for finance industry", statTeach: "years of teaching",
+      statStudents: "students on Udemy", numStudents: "65,000+", statCourses: "online courses",
+      aboutTitle: "About me",
+      about1: "I've spent more than 20 years building technology for the financial industry, and today I work as a system architect and engineering manager. I teach what I use on real projects: designing systems, writing code that's easy to maintain, and running it in the cloud.",
+      about2: "I'm based in Indonesia and have been teaching for more than 8 years. I build every lesson from hands-on experience, so what you learn is ready to use at work.",
+      topicsTitle: "What I teach",
+      t1Title: "Software engineering",
+      t1Body: "From solid fundamentals to architecture: programming languages, system design and the practices professional teams use.",
+      t2Title: "AI &amp; automation",
+      t2Body: "Using generative AI and automation to get real work done faster.",
+      t3Title: "Cloud &amp; DevOps",
+      t3Body: "Containers, CI/CD and cloud infrastructure: how to take an app from your laptop to production.",
+      seeCourses: "See courses",
+      ctaBody: "All my courses are in one place. Pick the topic you need right now.",
+      footUdemy: "Udemy profile",
+      description: "Timotius Pamungkas: system architect and engineering manager teaching software engineering, AI & automation, and cloud & DevOps on Udemy."
+    }
+  };
+
+  const store = {
+    get(k) { try { return localStorage.getItem(k); } catch { return null; } },
+    set(k, v) { try { localStorage.setItem(k, v); } catch {} }
+  };
+
+  function setLang(lang) {
+    const t = copy[lang] || copy.id;
+    document.documentElement.lang = lang;
+    document.querySelectorAll("[data-i18n]").forEach(el => { el.innerHTML = t[el.dataset.i18n]; });
+    document.querySelectorAll("[data-i18n-aria]").forEach(el => el.setAttribute("aria-label", t[el.dataset.i18nAria]));
+    document.querySelectorAll("[data-i18n-alt]").forEach(el => el.alt = t[el.dataset.i18nAlt]);
+    document.querySelector('meta[name="description"]').content = t.description;
+    document.querySelectorAll("[data-lang]").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.lang === lang)));
+  }
+
+  document.querySelectorAll("[data-lang]").forEach(b => b.addEventListener("click", () => {
+    setLang(b.dataset.lang);
+    store.set("lang", b.dataset.lang);
+  }));
+  const savedLang = store.get("lang");
+  if (savedLang === "en") setLang("en");
+
+  document.getElementById("year").textContent = new Date().getFullYear();
+</script>
 </body>
 </html>
