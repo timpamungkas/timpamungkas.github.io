@@ -1,0 +1,818 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Era Baru AI + Software Engineering: Menguasai Spec-Driven Development</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fira+Sans:wght@600;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;500&display=swap">
+<style>
+  html, body { margin: 0; height: 100%; background: #0f2e36; overflow: hidden; }
+  #stage { position: absolute; left: 50%; top: 50%; width: 1920px; height: 1080px; transform-origin: center; }
+  .slide { display: none; position: absolute; inset: 0; }
+  .slide.active { display: block; }
+  .slide > section { box-sizing: border-box; position: relative; width: 1920px; height: 1080px; overflow: hidden; }
+  section * { box-sizing: border-box; }
+  section h1, section h2, section h3, section p, section ul, section ol, section table { margin: 0; }
+  section h1 { font-size: 96px; font-weight: 600; line-height: 1.1; }
+  section h2 { font-size: 64px; font-weight: 600; line-height: 1.15; }
+  section h3 { font-size: 44px; font-weight: 600; line-height: 1.2; }
+  section p { font-size: 32px; line-height: 1.4; }
+  section ul, section ol { padding-left: 1.2em; }
+  section table { border-collapse: collapse; }
+  section th, section td { padding: 0.35em 0.6em; border-bottom: 1px solid #cdc3bd; vertical-align: top; }
+  section th { font-weight: 700; }
+  section hr { border: 0; margin: 0; width: 100%; }
+  .shape { display: block; flex: none; }
+  .shape-arrow-right { clip-path: polygon(0 30%, 60% 30%, 60% 0, 100% 50%, 60% 100%, 60% 70%, 0 70%); }
+  #counter { position: fixed; right: 16px; bottom: 12px; color: #82c0cc; font: 14px 'Roboto Mono', monospace; }
+  .prompt-hint { position: absolute; left: 128px; bottom: 48px; margin: 0; color: #4c656c;
+    font: 22px 'Roboto Mono', 'Courier New', monospace; letter-spacing: 1px; }
+  #prompt-panel { position: fixed; inset: 0; display: flex; align-items: center; justify-content: center;
+    padding: 24px; background: rgba(15, 46, 54, 0.7); }
+  #prompt-panel[hidden] { display: none; }
+  #prompt-panel .panel { width: min(1100px, 100%); max-height: 100%; overflow: auto; padding: 24px 28px;
+    background: #f8f5f3; color: #21414a; border-radius: 12px; font: 16px/1.5 Lato, Arial, sans-serif; }
+  #prompt-panel header { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; margin-bottom: 8px; }
+  #prompt-panel h2 { margin: 0; font: 600 22px 'Fira Sans', Arial, sans-serif; color: #0f2e36; }
+  #prompt-panel header span, #prompt-panel .label { color: #4c656c; font: 13px 'Roboto Mono', monospace; letter-spacing: 1px; }
+  #prompt-panel .block { margin-top: 16px; }
+  #prompt-panel .block-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
+  #prompt-panel pre { margin: 0; padding: 12px 14px; background: #e3dbd6; border-radius: 6px; white-space: pre-wrap;
+    font: 14px/1.5 'Roboto Mono', monospace; color: #0f2e36; }
+  #prompt-panel button { padding: 4px 12px; border: 1px solid #16697a; border-radius: 6px; background: #16697a;
+    color: #f8f5f3; font: 13px Lato, Arial, sans-serif; cursor: pointer; }
+  #prompt-panel table { width: 100%; border-collapse: collapse; font-size: 14px; }
+  #prompt-panel th, #prompt-panel td { text-align: left; padding: 6px 8px; border-bottom: 1px solid #cdc3bd; vertical-align: top; }
+  #prompt-panel th { background: #e3dbd6; }
+  @media print {
+    @page { size: 1920px 1080px; margin: 0; }
+    html, body { overflow: visible; background: none; }
+    #stage { position: static; transform: none !important; }
+    .slide { display: block; position: relative; page-break-after: always; }
+    #counter, #prompt-panel, .prompt-hint { display: none !important; }
+  }
+</style>
+</head>
+<body>
+<div id="stage">
+<div class="slide" data-index="0"><section id="cover" data-transition="fade" style="background:#16697a;color:#f8f5f3;font-family:Lato, Arial, sans-serif;padding:128px;display:flex;flex-direction:column;justify-content:space-between">
+<p style="font-family:'Roboto Mono', 'Courier New', monospace;font-size:28px;letter-spacing:3px;text-transform:uppercase;color:#f8f5f3">Workshop</p>
+<div style="display:flex;flex-direction:column;gap:40px">
+<div style="width:160px;height:12px;background:#ffa62b;border-radius:6px"></div>
+<h1 style="font-family:'Fira Sans', Arial, sans-serif;font-size:104px;font-weight:700;line-height:1.05;color:#f8f5f3;width:1500px">Era Baru AI + Software Engineering</h1>
+<p style="font-family:'Fira Sans', Arial, sans-serif;font-size:56px;font-weight:600;line-height:1.2;color:#f8f5f3">Menguasai Spec-Driven Development</p>
+</div>
+<div style="display:flex;justify-content:space-between;align-items:end">
+<div style="display:flex;flex-direction:column;gap:8px">
+<p style="font-size:36px;font-weight:700;color:#f8f5f3">Timotius Pamungkas</p>
+<p style="font-size:28px;color:#f8f5f3">timpamungkas.github.io</p>
+</div>
+<p style="font-family:'Roboto Mono', 'Courier New', monospace;font-size:24px;color:#f8f5f3">Live demo</p>
+</div>
+
+</section></div>
+<div class="slide" data-index="1"><section id="instructor" style="background:#ede7e3;color:#21414a;font-family:Lato, Arial, sans-serif;padding:128px;display:flex;flex-direction:column;gap:56px">
+<p style="font-family:'Roboto Mono', 'Courier New', monospace;font-size:24px;letter-spacing:2px;text-transform:uppercase;color:#16697a">Kenalan dulu</p>
+<div style="display:grid;grid-template-columns:1fr 720px;gap:96px;align-items:start">
+<div style="display:flex;flex-direction:column;gap:32px">
+<h2 style="font-family:'Fira Sans', Arial, sans-serif;font-size:72px;font-weight:700;line-height:1.1;color:#0f2e36">Timotius Pamungkas</h2>
+<ul style="font-size:34px;line-height:1.5;color:#21414a">
+<li>20+ tahun di software engineering</li>
+<li>Engineering Manager &amp; System Architect di perusahaan consumer finance</li>
+<li>Online instructor dengan 65.000+ siswa</li>
+<li>Sehari-hari memakai AI di seluruh SDLC</li>
+</ul>
+</div>
+<div style="display:flex;flex-direction:column;gap:24px;background:#ffa62b;color:#0f2e36;border-radius:12px;padding:48px">
+<p style="font-family:'Roboto Mono', 'Courier New', monospace;font-size:24px;letter-spacing:2px;text-transform:uppercase;color:#0f2e36">Profil &amp; materi lanjutan</p>
+<p style="font-family:'Fira Sans', Arial, sans-serif;font-size:52px;font-weight:700;line-height:1.15;color:#0f2e36">timpamungkas.github.io</p>
+<p style="font-size:30px;line-height:1.45;color:#0f2e36">Code demo hari ini, catatan, dan jalur belajar berikutnya ada di sana.</p>
+</div>
+</div>
+
+</section></div>
+<div class="slide" data-index="2"><section id="assumptions" style="background:#ede7e3;color:#21414a;font-family:Lato, Arial, sans-serif;padding:128px;display:flex;flex-direction:column;gap:48px">
+<p style="font-family:'Roboto Mono', 'Courier New', monospace;font-size:24px;letter-spacing:2px;text-transform:uppercase;color:#16697a">Sebelum mulai</p>
+<h2 style="font-family:'Fira Sans', Arial, sans-serif;font-size:64px;font-weight:700;line-height:1.1;color:#0f2e36">Asumsi peserta</h2>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:start">
+<div style="display:flex;flex-direction:column;gap:24px;background:#f8f5f3;border:1px solid #cdc3bd;border-radius:12px;padding:40px">
+<h3 style="font-family:'Fira Sans', Arial, sans-serif;font-size:36px;font-weight:600;color:#0f2e36">Peserta sudah punya pengalaman</h3>
+<ul style="font-size:30px;line-height:1.55">
+<li>Coding</li>
+<li>Memakai AI untuk coding (Claude, Codex, Antigravity, GitHub Copilot, atau lainnya)</li>
+<li>GitHub</li>
+<li>Opsional: software functional design</li>
+</ul>
+</div>
+<div style="display:flex;flex-direction:column;gap:24px">
+<div style="display:flex;flex-direction:column;gap:12px;background:#f8f5f3;border:1px solid #cdc3bd;border-radius:12px;padding:40px">
+<h3 style="font-family:'Fira Sans', Arial, sans-serif;font-size:36px;font-weight:600;color:#0f2e36">Efeknya</h3>
+<p style="font-size:30px;line-height:1.45">Training tidak mulai dari awal: instalasi tools tidak dibahas.</p>
+</div>
+<div style="display:flex;flex-direction:column;gap:12px;background:#f8f5f3;border:1px solid #cdc3bd;border-radius:12px;padding:40px">
+<h3 style="font-family:'Fira Sans', Arial, sans-serif;font-size:36px;font-weight:600;color:#0f2e36">Supaya waktu efektif</h3>
+<ul style="font-size:30px;line-height:1.55">
+<li>Hands-on lewat live demo</li>
+<li>Tanya jawab sesudah sesi</li>
+</ul>
+</div>
+</div>
+</div>
+
+</section></div>
+<div class="slide" data-index="3"><section id="agenda" style="background:#ede7e3;color:#21414a;font-family:Lato, Arial, sans-serif;padding:128px;display:flex;flex-direction:column;gap:48px">
+<p style="font-family:'Roboto Mono', 'Courier New', monospace;font-size:24px;letter-spacing:2px;text-transform:uppercase;color:#16697a">Urutan materi</p>
+<h2 style="font-family:'Fira Sans', Arial, sans-serif;font-size:64px;font-weight:700;line-height:1.1;color:#0f2e36">Rundown training</h2>
+<table style="font-size:28px;color:#21414a;width:1664px">
+<tr style="background:#e3dbd6"><th style="width:6%;text-align:left">#</th><th style="width:30%;text-align:left">Bagian</th><th style="width:64%;text-align:left">Yang dipelajari</th></tr>
+<tr><td>1</td><td>Pembukaan</td><td>Perkenalan, alur training, dan produk yang akan dibangun</td></tr>
+<tr><td>2</td><td>Spec-Driven Development</td><td>Kenapa spec lebih dulu, peran AI-native engineer, Spec-Kit, dan MCP</td></tr>
+<tr style="background:#f8f5f3"><td>3</td><td>Live demo: backend</td><td>Konstitusi, fitur daftar mobil dari specify sampai implement, lalu detail mobil dan booking secara ringkas, di Spring Boot 4 dan PostgreSQL 18</td></tr>
+<tr style="background:#f8f5f3"><td>4</td><td>Live demo: frontend</td><td>Halaman Our Cars dari kontrak API dan desain Figma menjadi React lewat MCP, lalu Car Detail dan booking secara ringkas</td></tr>
+<tr style="background:#f8f5f3"><td>5</td><td>Live demo: skenario tes</td><td>Skenario Given/When/Then yang diturunkan langsung dari spec</td></tr>
+<tr><td>6</td><td>Penutup</td><td>Rangkuman, tips untuk proyek nyata, dan tanya jawab</td></tr>
+</table>
+
+</section></div>
+<div class="slide" data-index="4"><section id="s1-divider" data-transition="push" style="background:#16697a;color:#f8f5f3;font-family:Lato, Arial, sans-serif;padding:128px;display:flex;flex-direction:column;justify-content:center;gap:32px">
+<p style="font-family:'Roboto Mono', 'Courier New', monospace;font-size:32px;letter-spacing:3px;color:#f8f5f3">01</p>
+<div style="width:160px;height:12px;background:#ffa62b;border-radius:6px"></div>
+<h2 style="font-family:'Fira Sans', Arial, sans-serif;font-size:96px;font-weight:700;line-height:1.05;color:#f8f5f3;width:1500px">Paradigma baru: spesifikasi lebih dulu (bukan vibe coding)</h2>
+<p style="font-size:36px;line-height:1.4;color:#f8f5f3;width:1300px">AI-native engineer, Spec-Driven Development, Spec-Kit, produk Xarent, dan MCP.</p>
+
+</section></div>
+<div class="slide" data-index="5"><section id="vibe-coding" style="background:#ede7e3;color:#21414a;font-family:Lato, Arial, sans-serif;padding:128px;display:flex;flex-direction:column;gap:48px">
+<p style="font-family:'Roboto Mono', 'Courier New', monospace;font-size:24px;letter-spacing:2px;text-transform:uppercase;color:#16697a">Masalahnya</p>
+<h2 style="font-family:'Fira Sans', Arial, sans-serif;font-size:64px;font-weight:700;line-height:1.1;color:#0f2e36;width:1500px">Vibe coding cepat di hari pertama, mahal di bulan ketiga</h2>
+<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:32px">
+<div style="display:flex;flex-direction:column;gap:16px;background:#f8f5f3;border:1px solid #cdc3bd;border-radius:12px;padding:40px">
+<h3 style="font-family:'Fira Sans', Arial, sans-serif;font-size:38px;font-weight:600;color:#0f2e36">Instruksi lepas</h3>
+<p style="font-size:30px;line-height:1.45">Prompt ditulis spontan, tidak disimpan, tidak bisa direview orang lain.</p>
+</div>
+<div style="display:flex;flex-direction:column;gap:16px;background:#f8f5f3;border:1px solid #cdc3bd;border-radius:12px;padding:40px">
+<h3 style="font-family:'Fira Sans', Arial, sans-serif;font-size:38px;font-weight:600;color:#0f2e36">Asumsi tersembunyi</h3>
+<p style="font-size:30px;line-height:1.45">AI mengisi celah dengan tebakan. Tebakan itu masuk ke code tanpa ada yang tahu.</p>
+</div>
+<div style="display:flex;flex-direction:column;gap:16px;background:#f8f5f3;border:1px solid #cdc3bd;border-radius:12px;padding:40px">
+<h3 style="font-family:'Fira Sans', Arial, sans-serif;font-size:38px;font-weight:600;color:#0f2e36">Hasil berubah-ubah</h3>
+<p style="font-size:30px;line-height:1.45">Prompt yang sama, jawaban berbeda. Tanpa acuan tertulis, tidak ada yang bisa dicek.</p>
+</div>
+</div>
+<p style="font-size:32px;line-height:1.45;color:#4c656c;width:1500px">Software yang dipakai dan dirawat butuh acuan tertulis yang bisa direview: spec.</p>
+
+</section></div>
+<div class="slide" data-index="6"><section id="vibe-spec" style="background:#ede7e3;color:#21414a;font-family:Lato, Arial, sans-serif;padding:128px;display:flex;flex-direction:column;gap:48px">
+<p style="font-family:'Roboto Mono', 'Courier New', monospace;font-size:24px;letter-spacing:2px;text-transform:uppercase;color:#16697a">Jebakan berikutnya</p>
+<h2 style="font-family:'Fira Sans', Arial, sans-serif;font-size:64px;font-weight:700;line-height:1.1;color:#0f2e36">Spec yang kabur tetap menghasilkan tebakan</h2>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:40px">
+<div style="display:flex;flex-direction:column;gap:20px;background:#f8f5f3;border:1px solid #cdc3bd;border-radius:12px;padding:40px">
+<p style="font-family:'Roboto Mono', 'Courier New', monospace;font-size:24px;letter-spacing:2px;text-transform:uppercase;color:#a63a24">Kabur</p>
+<p style="font-family:'Roboto Mono', 'Courier New', monospace;font-size:30px;line-height:1.5;color:#0f2e36;background:#e3dbd6;border-radius:6px;padding:24px 28px">Pengunjung bisa booking mobil. Mobil tidak boleh double booking.</p>
+<p style="font-size:30px;line-height:1.45">Kapan mobil kembali? Berapa harganya untuk 5,5 jam? Boleh langsung disewa lagi?</p>
+</div>
+<div style="display:flex;flex-direction:column;gap:20px;background:#f8f5f3;border:1px solid #cdc3bd;border-radius:12px;padding:40px">
+<p style="font-family:'Roboto Mono', 'Courier New', monospace;font-size:24px;letter-spacing:2px;text-transform:uppercase;color:#12665a">Presisi</p>
+<ul style="font-family:'Roboto Mono', 'Courier New', monospace;font-size:28px;line-height:1.5;color:#0f2e36;background:#e3dbd6;border-radius:6px;padding:24px 28px 24px 56px">
+<li>Pick-up ≥ 2 jam dari sekarang</li>
+<li>Sewa 1 jam sampai 30 hari</li>
+<li>Durasi dibulatkan ke atas per jam</li>
+<li>Jeda persiapan 1 jam antar sewa</li>
+</ul>
+<p style="font-size:30px;line-height:1.45">Setiap aturan bisa diuji. AI tidak perlu menebak.</p>
+</div>
+</div>
+
+</section></div>
+<div class="slide" data-index="7"><section id="spec-granular" style="background:#ede7e3;color:#21414a;font-family:Lato, Arial, sans-serif;padding:128px;display:flex;flex-direction:column;gap:32px">
+<p style="font-family:'Roboto Mono', 'Courier New', monospace;font-size:24px;letter-spacing:2px;text-transform:uppercase;color:#16697a">Vibe coding di dalam Spec-Kit</p>
+<h2 style="font-family:'Fira Sans', Arial, sans-serif;font-size:64px;font-weight:700;line-height:1.1;color:#0f2e36;width:1600px">Satu spec, satu kebutuhan, sedetail mungkin</h2>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:40px">
+<div style="display:flex;flex-direction:column;gap:20px;background:#f8f5f3;border:1px solid #cdc3bd;border-radius:12px;padding:40px">
+<p style="font-family:'Roboto Mono', 'Courier New', monospace;font-size:24px;letter-spacing:2px;text-transform:uppercase;color:#a63a24">Terlalu lebar</p>
+<p style="font-family:'Roboto Mono', 'Courier New', monospace;font-size:28px;line-height:1.5;color:#0f2e36;background:#e3dbd6;border-radius:6px;padding:24px 28px">/speckit-specify Pengunjung bisa melihat daftar mobil, melihat detail mobil, dan memesan mobil.</p>
+<p style="font-size:30px;line-height:1.45">Tiga kebutuhan dalam satu prompt. Spec jadi dangkal dan AI mengisi celahnya sendiri: tetap vibe coding, hanya lewat Spec-Kit.</p>
+</div>
+<div style="display:flex;flex-direction:column;gap:20px;background:#f8f5f3;border:1px solid #cdc3bd;border-radius:12px;padding:40px">
+<p style="font-family:'Roboto Mono', 'Courier New', monospace;font-size:24px;letter-spacing:2px;text-transform:uppercase;color:#12665a">Fine-grained</p>
+<ul style="font-family:'Roboto Mono', 'Courier New', monospace;font-size:28px;line-height:1.5;color:#0f2e36;background:#e3dbd6;border-radius:6px;padding:24px 28px 24px 56px">
+<li>001 Daftar mobil</li>
+<li>002 Detail mobil</li>
+<li>003 Booking mobil</li>
+</ul>
+<p style="font-size:30px;line-height:1.45">Setiap kebutuhan punya alur sendiri: specify, clarify, plan, tasks, implement. Kecil, mudah direview, dan bisa diuji sendiri.</p>
+</div>
+</div>
+<div style="display:flex;flex-direction:column;gap:16px">
+<h3 style="font-family:'Fira Sans', Arial, sans-serif;font-size:36px;font-weight:600;color:#0f2e36">Prompt specify yang detail menyebut</h3>
+<div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:24px">
+<p style="font-size:28px;line-height:1.35;background:#f8f5f3;border:1px solid #cdc3bd;border-radius:12px;padding:24px 28px">Data dan field</p>
+<p style="font-size:28px;line-height:1.35;background:#f8f5f3;border:1px solid #cdc3bd;border-radius:12px;padding:24px 28px">Aturan dan batas</p>
+<p style="font-size:28px;line-height:1.35;background:#f8f5f3;border:1px solid #cdc3bd;border-radius:12px;padding:24px 28px">Kasus kosong dan error</p>
+<p style="font-size:28px;line-height:1.35;background:#f8f5f3;border:1px solid #cdc3bd;border-radius:12px;padding:24px 28px">Yang di luar cakupan</p>
+</div>
+</div>
+
+</section></div>
+<div class="slide" data-index="8"><section id="ai-native" style="background:#ede7e3;color:#21414a;font-family:Lato, Arial, sans-serif;padding:128px;display:flex;flex-direction:column;gap:48px">
+<p style="font-family:'Roboto Mono', 'Courier New', monospace;font-size:24px;letter-spacing:2px;text-transform:uppercase;color:#16697a">AI-native engineer</p>
+<h2 style="font-family:'Fira Sans', Arial, sans-serif;font-size:64px;font-weight:700;line-height:1.1;color:#0f2e36;width:1500px">Peran bergeser dari menulis code ke menentukan apa dan mengapa</h2>
+<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:32px">
+<div style="display:flex;flex-direction:column;gap:16px;background:#f8f5f3;border:1px solid #cdc3bd;border-radius:12px;padding:40px">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="color:#16697a;width:56px;height:56px"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"/></svg>
+<h3 style="font-family:'Fira Sans', Arial, sans-serif;font-size:40px;font-weight:600;color:#0f2e36">Mendefinisikan</h3>
+<p style="font-size:30px;line-height:1.45">Aturan bisnis, batasan, dan kriteria selesai, ditulis sebagai spec.</p>
+</div>
+<div style="display:flex;flex-direction:column;gap:16px;background:#f8f5f3;border:1px solid #cdc3bd;border-radius:12px;padding:40px">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="color:#16697a;width:56px;height:56px"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+<h3 style="font-family:'Fira Sans', Arial, sans-serif;font-size:40px;font-weight:600;color:#0f2e36">Mengarahkan</h3>
+<p style="font-size:30px;line-height:1.45">Stack, arsitektur, dan prinsip tim, ditulis sebagai konstitusi dan plan.</p>
+</div>
+<div style="display:flex;flex-direction:column;gap:16px;background:#f8f5f3;border:1px solid #cdc3bd;border-radius:12px;padding:40px">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="color:#16697a;width:56px;height:56px"><path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z"/><path d="m9 12 2 2 4-4"/></svg>
+<h3 style="font-family:'Fira Sans', Arial, sans-serif;font-size:40px;font-weight:600;color:#0f2e36">Memverifikasi</h3>
+<p style="font-size:30px;line-height:1.45">Review setiap langkah AI, lalu buktikan hasilnya dengan skenario uji.</p>
+</div>
+</div>
+<p style="font-size:32px;line-height:1.45;color:#4c656c;width:1500px">AI mengeksekusi. Keputusan dan tanggung jawab tetap di tangan engineer.</p>
+
+</section></div>
+<div class="slide" data-index="9"><section id="sdd-core" style="background:#ede7e3;color:#21414a;font-family:Lato, Arial, sans-serif;padding:128px;display:flex;flex-direction:column;gap:56px">
+<p style="font-family:'Roboto Mono', 'Courier New', monospace;font-size:24px;letter-spacing:2px;text-transform:uppercase;color:#16697a">Spec-Driven Development</p>
+<h2 style="font-family:'Fira Sans', Arial, sans-serif;font-size:64px;font-weight:700;line-height:1.1;color:#0f2e36;width:1500px">Spec adalah satu-satunya sumber kebenaran</h2>
+<div style="display:flex;align-items:center;gap:24px">
+<div style="flex:1;display:flex;flex-direction:column;gap:8px;background:#ffa62b;border-radius:12px;padding:36px">
+<h3 style="font-family:'Fira Sans', Arial, sans-serif;font-size:44px;font-weight:700;color:#0f2e36">Spec</h3>
+<p style="font-size:28px;line-height:1.4;color:#0f2e36">Apa dan mengapa</p>
+</div>
+<div class="shape shape-arrow-right" aria-hidden="true" style="background:#489fb5;width:64px;height:32px"></div>
+<div style="flex:1;display:flex;flex-direction:column;gap:8px;background:#82c0cc;border-radius:12px;padding:36px">
+<h3 style="font-family:'Fira Sans', Arial, sans-serif;font-size:44px;font-weight:700;color:#0f2e36">Plan</h3>
+<p style="font-size:28px;line-height:1.4;color:#0f2e36">Bagaimana</p>
+</div>
+<div class="shape shape-arrow-right" aria-hidden="true" style="background:#489fb5;width:64px;height:32px"></div>
+<div style="flex:1;display:flex;flex-direction:column;gap:8px;background:#82c0cc;border-radius:12px;padding:36px">
+<h3 style="font-family:'Fira Sans', Arial, sans-serif;font-size:44px;font-weight:700;color:#0f2e36">Tasks</h3>
+<p style="font-size:28px;line-height:1.4;color:#0f2e36">Langkah kecil</p>
+</div>
+<div class="shape shape-arrow-right" aria-hidden="true" style="background:#489fb5;width:64px;height:32px"></div>
+<div style="flex:1;display:flex;flex-direction:column;gap:8px;background:#82c0cc;border-radius:12px;padding:36px">
+<h3 style="font-family:'Fira Sans', Arial, sans-serif;font-size:44px;font-weight:700;color:#0f2e36">Code</h3>
+<p style="font-size:28px;line-height:1.4;color:#0f2e36">Hasil eksekusi AI</p>
+</div>
+</div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:40px">
+<p style="font-size:32px;line-height:1.45">Spec, plan, dan tasks disimpan di repo dan direview seperti code.</p>
+<p style="font-size:32px;line-height:1.45">Saat implementasi menemukan hal baru, yang diperbarui spec-nya dulu, baru code-nya.</p>
+</div>
+
+</section></div>
+<div class="slide" data-index="10"><section id="sdd-vs-traditional" style="background:#ede7e3;color:#21414a;font-family:Lato, Arial, sans-serif;padding:128px;display:flex;flex-direction:column;gap:48px">
+<p style="font-family:'Roboto Mono', 'Courier New', monospace;font-size:24px;letter-spacing:2px;text-transform:uppercase;color:#16697a">Apa bedanya</p>
+<h2 style="font-family:'Fira Sans', Arial, sans-serif;font-size:64px;font-weight:700;line-height:1.1;color:#0f2e36">Dokumen requirement lama vs spec untuk AI</h2>
+<table style="font-size:30px;color:#21414a;width:1664px">
+<tr style="background:#e3dbd6"><th style="width:24%;text-align:left">Aspek</th><th style="width:38%;text-align:left">Cara lama</th><th style="width:38%;text-align:left">Spec-Driven Development</th></tr>
+<tr><td>Pembaca utama</td><td>Developer, sekali baca</td><td>AI agent dan reviewer, setiap langkah</td></tr>
+<tr style="background:#f8f5f3"><td>Umur dokumen</td><td>Usang setelah code jadi</td><td>Hidup di repo, ikut berubah</td></tr>
+<tr><td>Celah informasi</td><td>Diisi asumsi developer</td><td>Ditanyakan lewat clarify</td></tr>
+<tr style="background:#f8f5f3"><td>Konsistensi</td><td>Dicek manual saat review</td><td>Dicek otomatis lewat analyze</td></tr>
+<tr><td>Bukti selesai</td><td>"Sudah jalan di laptop saya"</td><td>Skenario Given/When/Then dari spec</td></tr>
+</table>
+
+</section></div>
+<div class="slide" data-index="11"><section id="speckit-map" style="background:#ede7e3;color:#21414a;font-family:Lato, Arial, sans-serif;padding:128px;display:flex;flex-direction:column;gap:40px">
+<p style="font-family:'Roboto Mono', 'Courier New', monospace;font-size:24px;letter-spacing:2px;text-transform:uppercase;color:#16697a">GitHub Spec-Kit</p>
+<h2 style="font-family:'Fira Sans', Arial, sans-serif;font-size:64px;font-weight:700;line-height:1.1;color:#0f2e36">Satu perintah, satu artefak yang bisa direview</h2>
+<table style="font-size:28px;color:#21414a;width:1664px">
+<tr style="background:#e3dbd6"><th style="width:32%;text-align:left">Perintah</th><th style="width:34%;text-align:left">Menghasilkan</th><th style="width:34%;text-align:left">Pertanyaan yang dijawab</th></tr>
+<tr><td style="font-family:'Roboto Mono', 'Courier New', monospace">specify init --here</td><td>Struktur .specify/ dan skills</td><td>Proyek siap dipakai?</td></tr>
+<tr style="background:#f8f5f3"><td style="font-family:'Roboto Mono', 'Courier New', monospace">/speckit-constitution</td><td>constitution.md</td><td>Aturan apa yang tidak bisa ditawar?</td></tr>
+<tr><td style="font-family:'Roboto Mono', 'Courier New', monospace">/speckit-specify</td><td>spec.md</td><td>Apa yang dibutuhkan pengguna?</td></tr>
+<tr style="background:#f8f5f3"><td style="font-family:'Roboto Mono', 'Courier New', monospace">/speckit-clarify</td><td>Bagian Clarifications</td><td>Apa yang masih ambigu?</td></tr>
+<tr><td style="font-family:'Roboto Mono', 'Courier New', monospace">/speckit-plan</td><td>plan, data model, kontrak API</td><td>Bagaimana membangunnya?</td></tr>
+<tr style="background:#f8f5f3"><td style="font-family:'Roboto Mono', 'Courier New', monospace">/speckit-tasks</td><td>tasks.md</td><td>Urutan kerjanya?</td></tr>
+<tr><td style="font-family:'Roboto Mono', 'Courier New', monospace">/speckit-analyze</td><td>Laporan konsistensi</td><td>Ada yang terlewat?</td></tr>
+<tr style="background:#f8f5f3"><td style="font-family:'Roboto Mono', 'Courier New', monospace">/speckit-implement</td><td>Code</td><td>Sudah sesuai spec?</td></tr>
+</table>
+
+</section></div>
+<div class="slide" data-index="12"><section id="xarent-case" style="background:#ede7e3;color:#21414a;font-family:Lato, Arial, sans-serif;padding:128px;display:flex;flex-direction:column;gap:48px">
+<p style="font-family:'Roboto Mono', 'Courier New', monospace;font-size:24px;letter-spacing:2px;text-transform:uppercase;color:#16697a">Yang akan kita bangun</p>
+<h2 style="font-family:'Fira Sans', Arial, sans-serif;font-size:64px;font-weight:700;line-height:1.1;color:#0f2e36;width:1500px">Xarent: produk rental mobil online, dibangun dari nol</h2>
+<p style="font-size:34px;line-height:1.45;width:1500px">Pengunjung website Xarent bisa melihat armada mobil, membuka detail satu mobil, lalu langsung memesannya, tanpa harus login.</p>
+<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:32px">
+<div style="display:flex;flex-direction:column;gap:20px;background:#f8f5f3;border:1px solid #cdc3bd;border-radius:12px;padding:40px">
+<h3 style="font-family:'Fira Sans', Arial, sans-serif;font-size:40px;font-weight:600;color:#0f2e36">Fitur</h3>
+<ul style="font-size:30px;line-height:1.5">
+<li>Daftar mobil + filter tipe</li>
+<li>Detail mobil</li>
+<li>Booking dengan aturan bisnis</li>
+</ul>
+</div>
+<div style="display:flex;flex-direction:column;gap:20px;background:#f8f5f3;border:1px solid #cdc3bd;border-radius:12px;padding:40px">
+<h3 style="font-family:'Fira Sans', Arial, sans-serif;font-size:40px;font-weight:600;color:#0f2e36">Backend</h3>
+<ul style="font-size:30px;line-height:1.5">
+<li>Spring Boot 4</li>
+<li>Java 25 + Maven</li>
+<li>PostgreSQL 18 di Docker</li>
+</ul>
+</div>
+<div style="display:flex;flex-direction:column;gap:20px;background:#f8f5f3;border:1px solid #cdc3bd;border-radius:12px;padding:40px">
+<h3 style="font-family:'Fira Sans', Arial, sans-serif;font-size:40px;font-weight:600;color:#0f2e36">Frontend</h3>
+<ul style="font-size:30px;line-height:1.5">
+<li>React + Vite</li>
+<li>Tailwind CSS</li>
+<li>Desain dari Figma</li>
+</ul>
+</div>
+</div>
+
+</section></div>
+<div class="slide" data-index="13"><section id="mcp" style="background:#ede7e3;color:#21414a;font-family:Lato, Arial, sans-serif;padding:128px;display:flex;flex-direction:column;gap:48px">
+<p style="font-family:'Roboto Mono', 'Courier New', monospace;font-size:24px;letter-spacing:2px;text-transform:uppercase;color:#16697a">Model Context Protocol</p>
+<h2 style="font-family:'Fira Sans', Arial, sans-serif;font-size:64px;font-weight:700;line-height:1.1;color:#0f2e36;width:1500px">MCP memberi AI konteks yang tidak ada di ingatannya</h2>
+<div style="display:grid;grid-template-columns:1fr 480px 1fr;gap:32px;align-items:center">
+<div style="display:flex;flex-direction:column;gap:16px;background:#f8f5f3;border:1px solid #cdc3bd;border-radius:12px;padding:40px">
+<h3 style="font-family:'Fira Sans', Arial, sans-serif;font-size:40px;font-weight:600;color:#0f2e36">Context7</h3>
+<p style="font-size:30px;line-height:1.45">Dokumentasi terbaru Spring Boot 4, bukan kebiasaan Boot 3 dari data training AI.</p>
+</div>
+<div style="display:flex;flex-direction:column;align-items:center;gap:16px;background:#16697a;border-radius:12px;padding:48px 32px">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="color:#f8f5f3;width:72px;height:72px"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+<p style="font-family:'Fira Sans', Arial, sans-serif;font-size:40px;font-weight:700;color:#f8f5f3;text-align:center">Claude Code</p>
+<p style="font-size:28px;color:#f8f5f3;text-align:center">+ Spec-Kit</p>
+</div>
+<div style="display:flex;flex-direction:column;gap:16px;background:#f8f5f3;border:1px solid #cdc3bd;border-radius:12px;padding:40px">
+<h3 style="font-family:'Fira Sans', Arial, sans-serif;font-size:40px;font-weight:600;color:#0f2e36">Figma MCP</h3>
+<p style="font-size:30px;line-height:1.45">Layout, warna, font, dan aset langsung dari file desain Xarent.</p>
+</div>
+</div>
+<p style="font-size:32px;line-height:1.45;color:#4c656c;width:1500px">MCP adalah standar terbuka untuk menghubungkan AI agent ke tools dan sumber data luar. Agent yang sama bisa membaca dokumentasi, desain, database, atau tiket tanpa integrasi khusus.</p>
+
+</section></div>
+<div class="slide" data-index="14"><section id="non-deterministic" style="background:#ede7e3;color:#21414a;font-family:Lato, Arial, sans-serif;padding:128px;display:flex;flex-direction:column;gap:48px">
+<p style="font-family:'Roboto Mono', 'Courier New', monospace;font-size:24px;letter-spacing:2px;text-transform:uppercase;color:#16697a">Sebelum live demo</p>
+<h2 style="font-family:'Fira Sans', Arial, sans-serif;font-size:64px;font-weight:700;line-height:1.1;color:#0f2e36;width:1500px">AI itu non-deterministic</h2>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:32px">
+<div style="display:flex;flex-direction:column;gap:16px;background:#f8f5f3;border:1px solid #cdc3bd;border-radius:12px;padding:40px">
+<h3 style="font-family:'Fira Sans', Arial, sans-serif;font-size:38px;font-weight:600;color:#0f2e36">Prompt sama, hasil beda</h3>
+<p style="font-size:30px;line-height:1.45">Pertanyaan clarify, struktur code, dan nama file bisa berbeda dari rehearsal, bahkan dari satu run ke run berikutnya.</p>
+</div>
+<div style="display:flex;flex-direction:column;gap:16px;background:#f8f5f3;border:1px solid #cdc3bd;border-radius:12px;padding:40px">
+<h3 style="font-family:'Fira Sans', Arial, sans-serif;font-size:38px;font-weight:600;color:#0f2e36">Yang dipelajari prosesnya</h3>
+<p style="font-size:30px;line-height:1.45">Fokus pada alur spec, plan, tasks, code, dan review. Outputnya tidak akan persis sama.</p>
+</div>
+</div>
+<div style="background:#ffa62b;color:#0f2e36;border-radius:12px;padding:32px 40px">
+<p style="font-family:'Fira Sans', Arial, sans-serif;font-size:40px;font-weight:700;line-height:1.25;color:#0f2e36">Justru karena hasilnya bisa berubah, spec dan review menjadi wajib.</p>
+</div>
+
+</section></div>
+<div class="slide" data-index="15"><section id="install-assumptions" style="background:#ede7e3;color:#21414a;font-family:Lato, Arial, sans-serif;padding:128px;display:flex;flex-direction:column;gap:48px">
+<p style="font-family:'Roboto Mono', 'Courier New', monospace;font-size:24px;letter-spacing:2px;text-transform:uppercase;color:#16697a">Sebelum Spec-Kit</p>
+<h2 style="font-family:'Fira Sans', Arial, sans-serif;font-size:64px;font-weight:700;line-height:1.1;color:#0f2e36;width:1500px">Asumsi instalasi</h2>
+<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:32px">
+<div style="display:flex;flex-direction:column;gap:20px;background:#f8f5f3;border:1px solid #cdc3bd;border-radius:12px;padding:40px">
+<h3 style="font-family:'Fira Sans', Arial, sans-serif;font-size:40px;font-weight:600;color:#0f2e36">Spec-Kit</h3>
+<p style="font-size:30px;line-height:1.45">CLI specify sudah terpasang.</p>
+<p style="font-family:'Roboto Mono', 'Courier New', monospace;font-size:26px;line-height:1.45;color:#0f2e36;background:#e3dbd6;border-radius:6px;padding:16px 20px">specify check</p>
+</div>
+<div style="display:flex;flex-direction:column;gap:20px;background:#f8f5f3;border:1px solid #cdc3bd;border-radius:12px;padding:40px">
+<h3 style="font-family:'Fira Sans', Arial, sans-serif;font-size:40px;font-weight:600;color:#0f2e36">Figma MCP</h3>
+<p style="font-size:30px;line-height:1.45">Terhubung ke Claude Code.</p>
+<p style="font-family:'Roboto Mono', 'Courier New', monospace;font-size:26px;line-height:1.45;color:#0f2e36;background:#e3dbd6;border-radius:6px;padding:16px 20px">/mcp → connected</p>
+</div>
+<div style="display:flex;flex-direction:column;gap:20px;background:#f8f5f3;border:1px solid #cdc3bd;border-radius:12px;padding:40px">
+<h3 style="font-family:'Fira Sans', Arial, sans-serif;font-size:40px;font-weight:600;color:#0f2e36">Context7 MCP</h3>
+<p style="font-size:30px;line-height:1.45">Terhubung ke Claude Code.</p>
+<p style="font-family:'Roboto Mono', 'Courier New', monospace;font-size:26px;line-height:1.45;color:#0f2e36;background:#e3dbd6;border-radius:6px;padding:16px 20px">/mcp → connected</p>
+</div>
+</div>
+<p style="font-size:32px;line-height:1.45;color:#4c656c;width:1500px">Cara instalasinya tidak dibahas di training ini; panduannya ada di dokumentasi masing-masing tools.</p>
+
+</section><p class="prompt-hint">Tekan M untuk melihat prompt lengkap</p></div>
+<div class="slide" data-index="16"><section id="s2-divider" data-transition="push" style="background:#16697a;color:#f8f5f3;font-family:Lato, Arial, sans-serif;padding:128px;display:flex;flex-direction:column;justify-content:center;gap:32px">
+<p style="font-family:'Roboto Mono', 'Courier New', monospace;font-size:32px;letter-spacing:3px;color:#f8f5f3">02 · live demo</p>
+<div style="width:160px;height:12px;background:#ffa62b;border-radius:6px"></div>
+<h2 style="font-family:'Fira Sans', Arial, sans-serif;font-size:96px;font-weight:700;line-height:1.05;color:#f8f5f3;width:1400px">Backend Xarent dengan Spec-Kit</h2>
+<p style="font-family:'Roboto Mono', 'Courier New', monospace;font-size:32px;line-height:1.4;color:#f8f5f3">Code demo: timpamungkas.github.io</p>
+
+</section></div>
+<div class="slide" data-index="17"><section id="demo-constitution" style="background:#ede7e3;color:#21414a;font-family:Lato, Arial, sans-serif;padding:128px;display:flex;flex-direction:column;gap:40px">
+<p style="font-family:'Roboto Mono', 'Courier New', monospace;font-size:24px;letter-spacing:2px;text-transform:uppercase;color:#16697a">Live demo · langkah 1</p>
+<h2 style="font-family:'Fira Sans', Arial, sans-serif;font-size:64px;font-weight:700;line-height:1.1;color:#0f2e36">Init dan konstitusi</h2>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:start">
+<div style="display:flex;flex-direction:column;gap:10px;background:#e3dbd6;border-radius:6px;padding:28px 32px">
+<p style="font-family:'Roboto Mono', 'Courier New', monospace;font-size:26px;line-height:1.45;color:#0f2e36">specify init --here</p>
+<p style="font-family:'Roboto Mono', 'Courier New', monospace;font-size:26px;line-height:1.45;color:#0f2e36">/speckit-constitution Buat konstitusi untuk backend Xarent, aplikasi rental mobil…</p>
+</div>
+<div style="display:flex;flex-direction:column;gap:20px">
+<h3 style="font-family:'Fira Sans', Arial, sans-serif;font-size:36px;font-weight:600;color:#0f2e36">Perhatikan</h3>
+<ul style="font-size:30px;line-height:1.5">
+<li>Apa yang disiapkan init: folder .specify/ dan skills untuk Claude</li>
+<li>Prinsip di konstitusi menjadi gerbang untuk setiap plan berikutnya</li>
+</ul>
+</div>
+</div>
+<p style="font-size:28px;line-height:1.45;color:#4c656c">Hasil: .specify/memory/constitution.md</p>
+
+</section><p class="prompt-hint">Tekan M untuk melihat prompt lengkap</p></div>
+<div class="slide" data-index="18"><section id="good-constitution" style="background:#ede7e3;color:#21414a;font-family:Lato, Arial, sans-serif;padding:128px;display:flex;flex-direction:column;gap:48px">
+<p style="font-family:'Roboto Mono', 'Courier New', monospace;font-size:24px;letter-spacing:2px;text-transform:uppercase;color:#16697a">Lebih dalam · konstitusi</p>
+<h2 style="font-family:'Fira Sans', Arial, sans-serif;font-size:64px;font-weight:700;line-height:1.1;color:#0f2e36;width:1500px">Prinsip yang baik cukup spesifik untuk dicek</h2>
+<table style="font-size:30px;color:#21414a;width:1664px">
+<tr style="background:#e3dbd6"><th style="width:40%;text-align:left">Slogan</th><th style="width:60%;text-align:left">Prinsip di konstitusi Xarent</th></tr>
+<tr><td>"Database harus rapi"</td><td>Skema hanya lewat migrasi Flyway; Hibernate ddl-auto=validate</td></tr>
+<tr style="background:#f8f5f3"><td>"Hitungan uang harus akurat"</td><td>BigDecimal di Java, numeric(12,2) di database</td></tr>
+<tr><td>"Error harus jelas"</td><td>RFC 9457 Problem Details dengan error code yang stabil</td></tr>
+<tr style="background:#f8f5f3"><td>"Pakai versi terbaru"</td><td>API Spring Boot 4 dicek lewat Context7 sebelum dipakai</td></tr>
+</table>
+<p style="font-size:32px;line-height:1.45;color:#4c656c;width:1500px">Tanda prinsip yang baik: reviewer bisa langsung menjawab "dipatuhi atau tidak".</p>
+
+</section></div>
+<div class="slide" data-index="19"><section id="be-features" style="background:#ede7e3;color:#21414a;font-family:Lato, Arial, sans-serif;padding:128px;display:flex;flex-direction:column;gap:40px">
+<p style="font-family:'Roboto Mono', 'Courier New', monospace;font-size:24px;letter-spacing:2px;text-transform:uppercase;color:#16697a">Live demo · rencana backend</p>
+<h2 style="font-family:'Fira Sans', Arial, sans-serif;font-size:64px;font-weight:700;line-height:1.1;color:#0f2e36;width:1600px">Tiga kebutuhan, tiga alur Spec-Kit</h2>
+<table style="font-size:28px;color:#21414a;width:1664px">
+<tr style="background:#e3dbd6"><th style="width:22%;text-align:left">Fitur</th><th style="width:30%;text-align:left">Lingkup</th><th style="width:48%;text-align:left">Di demo</th></tr>
+<tr><td style="font-family:'Roboto Mono', 'Courier New', monospace">001 Daftar mobil</td><td>Armada dan filter tipe</td><td>Live: satu alur penuh, dari specify sampai implement</td></tr>
+<tr style="background:#f8f5f3"><td style="font-family:'Roboto Mono', 'Courier New', monospace">002 Detail mobil</td><td>Detail satu mobil</td><td>Ditunjukkan ringkas, satu slide</td></tr>
+<tr><td style="font-family:'Roboto Mono', 'Courier New', monospace">003 Booking mobil</td><td>Booking dan aturan bisnis</td><td>Ditunjukkan ringkas, satu slide</td></tr>
+</table>
+<p style="font-size:30px;line-height:1.45;color:#4c656c;width:1500px">Urutannya mengikuti ketergantungan: booking butuh mobil. Setiap specify membuat folder spec dan branch sendiri.</p>
+
+</section></div>
+<div class="slide" data-index="20"><section id="demo-specify" style="background:#ede7e3;color:#21414a;font-family:Lato, Arial, sans-serif;padding:128px;display:flex;flex-direction:column;gap:40px">
+<p style="font-family:'Roboto Mono', 'Courier New', monospace;font-size:24px;letter-spacing:2px;text-transform:uppercase;color:#16697a">Live demo · fitur 001 daftar mobil · langkah 2</p>
+<h2 style="font-family:'Fira Sans', Arial, sans-serif;font-size:64px;font-weight:700;line-height:1.1;color:#0f2e36">Specify dan clarify</h2>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:start">
+<div style="display:flex;flex-direction:column;gap:10px;background:#e3dbd6;border-radius:6px;padding:28px 32px">
+<p style="font-family:'Roboto Mono', 'Courier New', monospace;font-size:26px;line-height:1.45;color:#0f2e36">/speckit-specify Fitur: daftar mobil…</p>
+<p style="font-family:'Roboto Mono', 'Courier New', monospace;font-size:26px;line-height:1.45;color:#0f2e36">· tipe tetap: Compact, Sedan, SUV, MPV</p>
+<p style="font-family:'Roboto Mono', 'Courier New', monospace;font-size:26px;line-height:1.45;color:#0f2e36">· urut harga per jam termurah, lalu nama</p>
+<p style="font-family:'Roboto Mono', 'Courier New', monospace;font-size:26px;line-height:1.45;color:#0f2e36">· tipe tidak dikenal ditolak dengan pesan jelas</p>
+<p style="font-family:'Roboto Mono', 'Courier New', monospace;font-size:26px;line-height:1.45;color:#0f2e36">· di luar cakupan: detail, booking, pagination</p>
+<p style="font-family:'Roboto Mono', 'Courier New', monospace;font-size:26px;line-height:1.45;color:#0f2e36">/speckit-clarify</p>
+</div>
+<div style="display:flex;flex-direction:column;gap:20px">
+<h3 style="font-family:'Fira Sans', Arial, sans-serif;font-size:36px;font-weight:600;color:#0f2e36">Perhatikan</h3>
+<ul style="font-size:30px;line-height:1.5">
+<li>Prompt menyebut field, aturan, kasus kosong, dan batas cakupan</li>
+<li>Apa yang masih dianggap ambigu oleh AI?</li>
+<li>Setiap jawaban tercatat di spec, bukan hilang di chat</li>
+</ul>
+</div>
+</div>
+<p style="font-size:28px;line-height:1.45;color:#4c656c">Hasil: spec.md fitur 001 dengan bagian Clarifications</p>
+
+</section><p class="prompt-hint">Tekan M untuk melihat prompt lengkap</p></div>
+<div class="slide" data-index="21"><section id="demo-plan" style="background:#ede7e3;color:#21414a;font-family:Lato, Arial, sans-serif;padding:128px;display:flex;flex-direction:column;gap:40px">
+<p style="font-family:'Roboto Mono', 'Courier New', monospace;font-size:24px;letter-spacing:2px;text-transform:uppercase;color:#16697a">Live demo · fitur 001 daftar mobil · langkah 3</p>
+<h2 style="font-family:'Fira Sans', Arial, sans-serif;font-size:64px;font-weight:700;line-height:1.1;color:#0f2e36">Plan dengan dokumentasi terbaru</h2>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:start">
+<div style="display:flex;flex-direction:column;gap:10px;background:#e3dbd6;border-radius:6px;padding:28px 32px">
+<p style="font-family:'Roboto Mono', 'Courier New', monospace;font-size:26px;line-height:1.45;color:#0f2e36">/speckit-plan Spring Boot 4, Java 25, Maven wrapper, PostgreSQL 18 di Docker Compose, Flyway, springdoc. Gunakan Context7…</p>
+</div>
+<div style="display:flex;flex-direction:column;gap:20px">
+<h3 style="font-family:'Fira Sans', Arial, sans-serif;font-size:36px;font-weight:600;color:#0f2e36">Perhatikan</h3>
+<ul style="font-size:30px;line-height:1.5">
+<li>Apakah AI mengecek dokumentasi terbaru lewat Context7?</li>
+<li>Constitution Check: prinsip konstitusi dicek sebelum dan sesudah desain</li>
+<li>Stack ditetapkan sekali di fitur pertama; fitur berikutnya mengikutinya</li>
+</ul>
+</div>
+</div>
+<p style="font-size:28px;line-height:1.45;color:#4c656c">Hasil: plan.md, research.md, data-model.md, contracts/, quickstart.md</p>
+
+</section><p class="prompt-hint">Tekan M untuk melihat prompt lengkap</p></div>
+<div class="slide" data-index="22"><section id="demo-cars-implement" style="background:#ede7e3;color:#21414a;font-family:Lato, Arial, sans-serif;padding:128px;display:flex;flex-direction:column;gap:40px">
+<p style="font-family:'Roboto Mono', 'Courier New', monospace;font-size:24px;letter-spacing:2px;text-transform:uppercase;color:#16697a">Live demo · fitur 001 daftar mobil · langkah 4</p>
+<h2 style="font-family:'Fira Sans', Arial, sans-serif;font-size:64px;font-weight:700;line-height:1.1;color:#0f2e36">Tasks, analyze, implement</h2>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:start">
+<div style="display:flex;flex-direction:column;gap:10px;background:#e3dbd6;border-radius:6px;padding:28px 32px">
+<p style="font-family:'Roboto Mono', 'Courier New', monospace;font-size:26px;line-height:1.45;color:#0f2e36">/speckit-tasks</p>
+<p style="font-family:'Roboto Mono', 'Courier New', monospace;font-size:26px;line-height:1.45;color:#0f2e36">/speckit-analyze</p>
+<p style="font-family:'Roboto Mono', 'Courier New', monospace;font-size:26px;line-height:1.45;color:#0f2e36">/speckit-implement</p>
+<p style="font-family:'Roboto Mono', 'Courier New', monospace;font-size:26px;line-height:1.45;color:#0f2e36">docker compose up -d &amp;&amp; ./mvnw spring-boot:run</p>
+</div>
+<div style="display:flex;flex-direction:column;gap:20px">
+<h3 style="font-family:'Fira Sans', Arial, sans-serif;font-size:36px;font-weight:600;color:#0f2e36">Perhatikan</h3>
+<ul style="font-size:30px;line-height:1.5">
+<li>Tasks kecil dan hanya untuk daftar mobil</li>
+<li>Temuan analyze: diperbaiki sekarang, atau diterima secara sadar?</li>
+<li>Daftar mobil dan filter tipe dicoba di Swagger UI</li>
+</ul>
+</div>
+</div>
+<p style="font-size:28px;line-height:1.45;color:#4c656c">Hasil: Daftar mobil berjalan, bisa dicoba di Swagger UI</p>
+
+</section><p class="prompt-hint">Tekan M untuk melihat prompt lengkap</p></div>
+<div class="slide" data-index="23"><section id="demo-detail" style="background:#ede7e3;color:#21414a;font-family:Lato, Arial, sans-serif;padding:128px;display:flex;flex-direction:column;gap:40px">
+<p style="font-family:'Roboto Mono', 'Courier New', monospace;font-size:24px;letter-spacing:2px;text-transform:uppercase;color:#16697a">Ringkas · fitur 002 detail mobil</p>
+<h2 style="font-family:'Fira Sans', Arial, sans-serif;font-size:64px;font-weight:700;line-height:1.1;color:#0f2e36">002 · Detail mobil</h2>
+<div style="display:grid;grid-template-columns:1fr;gap:56px;align-items:start">
+<div style="display:flex;flex-direction:column;gap:10px;background:#e3dbd6;border-radius:6px;padding:28px 32px">
+<p style="font-family:'Roboto Mono', 'Courier New', monospace;font-size:26px;line-height:1.45;color:#0f2e36">/speckit-specify Fitur: detail satu mobil…</p>
+<p style="font-family:'Roboto Mono', 'Courier New', monospace;font-size:26px;line-height:1.45;color:#0f2e36">· deskripsi, fitur, rating 0.0 sampai 5.0, jumlah ulasan</p>
+<p style="font-family:'Roboto Mono', 'Courier New', monospace;font-size:26px;line-height:1.45;color:#0f2e36">· mobil tanpa ulasan: rating 0.0, ulasan 0</p>
+<p style="font-family:'Roboto Mono', 'Courier New', monospace;font-size:26px;line-height:1.45;color:#0f2e36">· tidak ditemukan berbeda dari format tidak valid</p>
+<p style="font-family:'Roboto Mono', 'Courier New', monospace;font-size:26px;line-height:1.45;color:#16697a">clarify → plan → tasks → implement</p>
+</div>
+</div>
+
+</section><p class="prompt-hint">Tekan M untuk melihat prompt lengkap</p></div>
+<div class="slide" data-index="24"><section id="demo-booking" style="background:#ede7e3;color:#21414a;font-family:Lato, Arial, sans-serif;padding:128px;display:flex;flex-direction:column;gap:40px">
+<p style="font-family:'Roboto Mono', 'Courier New', monospace;font-size:24px;letter-spacing:2px;text-transform:uppercase;color:#16697a">Ringkas · fitur 003 booking mobil</p>
+<h2 style="font-family:'Fira Sans', Arial, sans-serif;font-size:64px;font-weight:700;line-height:1.1;color:#0f2e36">003 · Booking mobil</h2>
+<div style="display:grid;grid-template-columns:1fr;gap:56px;align-items:start">
+<div style="display:flex;flex-direction:column;gap:10px;background:#e3dbd6;border-radius:6px;padding:28px 32px">
+<p style="font-family:'Roboto Mono', 'Courier New', monospace;font-size:26px;line-height:1.45;color:#0f2e36">/speckit-specify Fitur: booking mobil…</p>
+<p style="font-family:'Roboto Mono', 'Courier New', monospace;font-size:26px;line-height:1.45;color:#0f2e36">· nama, nomor HP, cabang, waktu ambil dan kembali</p>
+<p style="font-family:'Roboto Mono', 'Courier New', monospace;font-size:26px;line-height:1.45;color:#0f2e36">· tidak boleh bentrok, termasuk booking bersamaan</p>
+<p style="font-family:'Roboto Mono', 'Courier New', monospace;font-size:26px;line-height:1.45;color:#0f2e36">· booking code dan total harga saat konfirmasi</p>
+<p style="font-family:'Roboto Mono', 'Courier New', monospace;font-size:26px;line-height:1.45;color:#16697a">clarify → plan → tasks → analyze → implement</p>
+</div>
+</div>
+
+</section><p class="prompt-hint">Tekan M untuk melihat prompt lengkap</p></div>
+<div class="slide" data-index="25"><section id="review-story" style="background:#ede7e3;color:#21414a;font-family:Lato, Arial, sans-serif;padding:128px;display:flex;flex-direction:column;gap:48px">
+<p style="font-family:'Roboto Mono', 'Courier New', monospace;font-size:24px;letter-spacing:2px;text-transform:uppercase;color:#16697a">Review itu wajib</p>
+<h2 style="font-family:'Fira Sans', Arial, sans-serif;font-size:64px;font-weight:700;line-height:1.1;color:#0f2e36;width:1500px">Output AI bisa terlihat benar, padahal belum tentu</h2>
+<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:32px">
+<div style="display:flex;flex-direction:column;gap:16px;background:#f8f5f3;border:1px solid #cdc3bd;border-radius:12px;padding:40px">
+<p style="font-family:'Roboto Mono', 'Courier New', monospace;font-size:24px;letter-spacing:2px;text-transform:uppercase;color:#4c656c">Terlihat</p>
+<p style="font-size:30px;line-height:1.45">Plan dan code tampak masuk akal dan rapi.</p>
+</div>
+<div style="display:flex;flex-direction:column;gap:16px;background:#f8f5f3;border:1px solid #cdc3bd;border-radius:12px;padding:40px">
+<p style="font-family:'Roboto Mono', 'Courier New', monospace;font-size:24px;letter-spacing:2px;text-transform:uppercase;color:#a63a24">Ternyata</p>
+<p style="font-size:30px;line-height:1.45">Database, compiler, atau skenario uji bisa menolaknya.</p>
+</div>
+<div style="display:flex;flex-direction:column;gap:16px;background:#f8f5f3;border:1px solid #cdc3bd;border-radius:12px;padding:40px">
+<p style="font-family:'Roboto Mono', 'Courier New', monospace;font-size:24px;letter-spacing:2px;text-transform:uppercase;color:#12665a">Perbaikan</p>
+<p style="font-size:30px;line-height:1.45">Perbarui dokumen desain dulu, lalu code-nya.</p>
+</div>
+</div>
+<div style="background:#ffa62b;color:#0f2e36;border-radius:12px;padding:32px 40px">
+<p style="font-family:'Fira Sans', Arial, sans-serif;font-size:40px;font-weight:700;line-height:1.25;color:#0f2e36">Review, review, review. Setiap output AI wajib direview sebelum lanjut ke langkah berikutnya.</p>
+</div>
+
+</section></div>
+<div class="slide" data-index="26"><section id="s3-divider" data-transition="push" style="background:#16697a;color:#f8f5f3;font-family:Lato, Arial, sans-serif;padding:128px;display:flex;flex-direction:column;justify-content:center;gap:32px">
+<p style="font-family:'Roboto Mono', 'Courier New', monospace;font-size:32px;letter-spacing:3px;color:#f8f5f3">03 · live demo</p>
+<div style="width:160px;height:12px;background:#ffa62b;border-radius:6px"></div>
+<h2 style="font-family:'Fira Sans', Arial, sans-serif;font-size:96px;font-weight:700;line-height:1.05;color:#f8f5f3;width:1500px">Frontend dari kontrak API dan Figma MCP</h2>
+<p style="font-family:'Roboto Mono', 'Courier New', monospace;font-size:32px;line-height:1.4;color:#f8f5f3">Code demo: timpamungkas.github.io</p>
+
+</section></div>
+<div class="slide" data-index="27"><section id="demo-fe-spec" style="background:#ede7e3;color:#21414a;font-family:Lato, Arial, sans-serif;padding:128px;display:flex;flex-direction:column;gap:40px">
+<p style="font-family:'Roboto Mono', 'Courier New', monospace;font-size:24px;letter-spacing:2px;text-transform:uppercase;color:#16697a">Live demo · frontend fitur 001 Our Cars · langkah 5</p>
+<h2 style="font-family:'Fira Sans', Arial, sans-serif;font-size:64px;font-weight:700;line-height:1.1;color:#0f2e36">Satu halaman, satu spec</h2>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:start">
+<div style="display:flex;flex-direction:column;gap:10px;background:#e3dbd6;border-radius:6px;padding:28px 32px">
+<p style="font-family:'Roboto Mono', 'Courier New', monospace;font-size:26px;line-height:1.45;color:#0f2e36">/speckit-specify Fitur: halaman Our Cars…</p>
+<p style="font-family:'Roboto Mono', 'Courier New', monospace;font-size:26px;line-height:1.45;color:#0f2e36">· kartu mobil dan chip filter tipe sesuai Figma</p>
+<p style="font-family:'Roboto Mono', 'Courier New', monospace;font-size:26px;line-height:1.45;color:#0f2e36">· filter tercermin di URL</p>
+<p style="font-family:'Roboto Mono', 'Courier New', monospace;font-size:26px;line-height:1.45;color:#0f2e36">· state loading, kosong, dan error</p>
+<p style="font-family:'Roboto Mono', 'Courier New', monospace;font-size:26px;line-height:1.45;color:#0f2e36">/speckit-clarify</p>
+</div>
+<div style="display:flex;flex-direction:column;gap:20px">
+<h3 style="font-family:'Fira Sans', Arial, sans-serif;font-size:36px;font-weight:600;color:#0f2e36">Perhatikan</h3>
+<ul style="font-size:30px;line-height:1.5">
+<li>Frontend juga dipecah: Our Cars, Car Detail, booking</li>
+<li>Kontrak API diambil dari backend yang berjalan</li>
+<li>Apakah desain Figma dan kontrak API saling cocok?</li>
+</ul>
+</div>
+</div>
+<p style="font-size:28px;line-height:1.45;color:#4c656c">Hasil: Kontrak backend disimpan di contracts/xarent-api.yaml</p>
+
+</section><p class="prompt-hint">Tekan M untuk melihat prompt lengkap</p></div>
+<div class="slide" data-index="28"><section id="demo-figma" style="background:#ede7e3;color:#21414a;font-family:Lato, Arial, sans-serif;padding:128px;display:flex;flex-direction:column;gap:40px">
+<p style="font-family:'Roboto Mono', 'Courier New', monospace;font-size:24px;letter-spacing:2px;text-transform:uppercase;color:#16697a">Live demo · frontend fitur 001 Our Cars · langkah 6</p>
+<h2 style="font-family:'Fira Sans', Arial, sans-serif;font-size:64px;font-weight:700;line-height:1.1;color:#0f2e36">Figma MCP ke React</h2>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:start">
+<div style="display:flex;flex-direction:column;gap:10px;background:#e3dbd6;border-radius:6px;padding:28px 32px">
+<p style="font-family:'Roboto Mono', 'Courier New', monospace;font-size:26px;line-height:1.45;color:#0f2e36">/speckit-plan React + Vite + TypeScript + Tailwind CSS 4…</p>
+<p style="font-family:'Roboto Mono', 'Courier New', monospace;font-size:26px;line-height:1.45;color:#0f2e36">/speckit-tasks</p>
+<p style="font-family:'Roboto Mono', 'Courier New', monospace;font-size:26px;line-height:1.45;color:#0f2e36">/speckit-implement Gunakan Figma MCP untuk frame "Our Cars"…</p>
+<p style="font-family:'Roboto Mono', 'Courier New', monospace;font-size:26px;line-height:1.45;color:#0f2e36">npm run dev</p>
+</div>
+<div style="display:flex;flex-direction:column;gap:20px">
+<h3 style="font-family:'Fira Sans', Arial, sans-serif;font-size:36px;font-weight:600;color:#0f2e36">Perhatikan</h3>
+<ul style="font-size:30px;line-height:1.5">
+<li>Dari mana warna, font, dan aset diambil: Figma atau tebakan?</li>
+<li>Seberapa dekat hasilnya dengan desain?</li>
+<li>Hanya halaman Our Cars yang dibangun di fitur ini</li>
+</ul>
+</div>
+</div>
+<p style="font-size:28px;line-height:1.45;color:#4c656c">Hasil: Halaman Our Cars berjalan di localhost:5173</p>
+
+</section><p class="prompt-hint">Tekan M untuk melihat prompt lengkap</p></div>
+<div class="slide" data-index="29"><section id="demo-fe-detail" style="background:#ede7e3;color:#21414a;font-family:Lato, Arial, sans-serif;padding:128px;display:flex;flex-direction:column;gap:40px">
+<p style="font-family:'Roboto Mono', 'Courier New', monospace;font-size:24px;letter-spacing:2px;text-transform:uppercase;color:#16697a">Ringkas · frontend fitur 002 Car Detail</p>
+<h2 style="font-family:'Fira Sans', Arial, sans-serif;font-size:64px;font-weight:700;line-height:1.1;color:#0f2e36">002 · Car Detail</h2>
+<div style="display:grid;grid-template-columns:1fr;gap:56px;align-items:start">
+<div style="display:flex;flex-direction:column;gap:10px;background:#e3dbd6;border-radius:6px;padding:28px 32px">
+<p style="font-family:'Roboto Mono', 'Courier New', monospace;font-size:26px;line-height:1.45;color:#0f2e36">/speckit-specify Fitur: halaman Car Detail…</p>
+<p style="font-family:'Roboto Mono', 'Courier New', monospace;font-size:26px;line-height:1.45;color:#0f2e36">· detail, fitur, dan rating sesuai Figma</p>
+<p style="font-family:'Roboto Mono', 'Courier New', monospace;font-size:26px;line-height:1.45;color:#0f2e36">· Book this car membuka booking dengan mobil terpilih</p>
+<p style="font-family:'Roboto Mono', 'Courier New', monospace;font-size:26px;line-height:1.45;color:#0f2e36">· tampilan Mobil tidak ditemukan</p>
+<p style="font-family:'Roboto Mono', 'Courier New', monospace;font-size:26px;line-height:1.45;color:#16697a">clarify → plan → tasks → implement dengan Figma MCP</p>
+</div>
+</div>
+
+</section><p class="prompt-hint">Tekan M untuk melihat prompt lengkap</p></div>
+<div class="slide" data-index="30"><section id="demo-fe-booking" style="background:#ede7e3;color:#21414a;font-family:Lato, Arial, sans-serif;padding:128px;display:flex;flex-direction:column;gap:40px">
+<p style="font-family:'Roboto Mono', 'Courier New', monospace;font-size:24px;letter-spacing:2px;text-transform:uppercase;color:#16697a">Ringkas · frontend fitur 003 booking</p>
+<h2 style="font-family:'Fira Sans', Arial, sans-serif;font-size:64px;font-weight:700;line-height:1.1;color:#0f2e36">003 · Booking</h2>
+<div style="display:grid;grid-template-columns:1fr;gap:56px;align-items:start">
+<div style="display:flex;flex-direction:column;gap:10px;background:#e3dbd6;border-radius:6px;padding:28px 32px">
+<p style="font-family:'Roboto Mono', 'Courier New', monospace;font-size:26px;line-height:1.45;color:#0f2e36">/speckit-specify Fitur: halaman booking…</p>
+<p style="font-family:'Roboto Mono', 'Courier New', monospace;font-size:26px;line-height:1.45;color:#0f2e36">· mobil dan cabang diambil dari API</p>
+<p style="font-family:'Roboto Mono', 'Courier New', monospace;font-size:26px;line-height:1.45;color:#0f2e36">· aturan bisnis tetap diputuskan API</p>
+<p style="font-family:'Roboto Mono', 'Courier New', monospace;font-size:26px;line-height:1.45;color:#0f2e36">· panel konfirmasi berisi booking code</p>
+<p style="font-family:'Roboto Mono', 'Courier New', monospace;font-size:26px;line-height:1.45;color:#16697a">clarify → plan → tasks → implement dengan Figma MCP</p>
+</div>
+</div>
+
+</section><p class="prompt-hint">Tekan M untuk melihat prompt lengkap</p></div>
+<div class="slide" data-index="31"><section id="demo-testing" style="background:#ede7e3;color:#21414a;font-family:Lato, Arial, sans-serif;padding:128px;display:flex;flex-direction:column;gap:40px">
+<p style="font-family:'Roboto Mono', 'Courier New', monospace;font-size:24px;letter-spacing:2px;text-transform:uppercase;color:#16697a">Live demo · langkah 8</p>
+<h2 style="font-family:'Fira Sans', Arial, sans-serif;font-size:64px;font-weight:700;line-height:1.1;color:#0f2e36">Skenario tes lahir dari spec, bukan dari code</h2>
+<table style="font-size:28px;color:#21414a;width:1664px">
+<tr style="background:#e3dbd6"><th style="width:30%;text-align:left">Given</th><th style="width:26%;text-align:left">When</th><th style="width:44%;text-align:left">Then</th></tr>
+<tr><td>Mobil sudah dibooking</td><td>Booking di jam yang bentrok</td><td>Ditolak, dengan alasan yang jelas</td></tr>
+<tr style="background:#f8f5f3"><td>Mobil sudah dibooking</td><td>Booking setelah waktu persiapan</td><td>Diterima</td></tr>
+<tr><td>Mobil kosong</td><td>Sewa lewat beberapa menit dari jam bulat</td><td>Ditagih per jam, dibulatkan ke atas</td></tr>
+<tr style="background:#f8f5f3"><td>Mobil kosong</td><td>Banyak booking serentak</td><td>Hanya satu yang berhasil</td></tr>
+</table>
+<p style="font-size:32px;line-height:1.45;color:#4c656c;width:1500px">AI menurunkan skenario dari requirement, termasuk kasus batas. Skenario ini bisa diterjemahkan menjadi tes otomatis.</p>
+
+</section><p class="prompt-hint">Tekan M untuk melihat prompt lengkap</p></div>
+<div class="slide" data-index="32"><section id="recap" style="background:#ede7e3;color:#21414a;font-family:Lato, Arial, sans-serif;padding:128px;display:flex;flex-direction:column;gap:48px">
+<p style="font-family:'Roboto Mono', 'Courier New', monospace;font-size:24px;letter-spacing:2px;text-transform:uppercase;color:#16697a">Rangkuman</p>
+<h2 style="font-family:'Fira Sans', Arial, sans-serif;font-size:64px;font-weight:700;line-height:1.1;color:#0f2e36">Empat hal untuk dibawa pulang</h2>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:32px">
+<div style="display:flex;flex-direction:column;gap:12px;background:#f8f5f3;border:1px solid #cdc3bd;border-radius:12px;padding:40px">
+<h3 style="font-family:'Fira Sans', Arial, sans-serif;font-size:40px;font-weight:600;color:#0f2e36">1. Spec dulu, code kemudian</h3>
+<p style="font-size:30px;line-height:1.45">Satu kebutuhan, satu spec yang detail. Spec di repo adalah sumber kebenaran.</p>
+</div>
+<div style="display:flex;flex-direction:column;gap:12px;background:#f8f5f3;border:1px solid #cdc3bd;border-radius:12px;padding:40px">
+<h3 style="font-family:'Fira Sans', Arial, sans-serif;font-size:40px;font-weight:600;color:#0f2e36">2. Clarify sebelum plan</h3>
+<p style="font-size:30px;line-height:1.45">Keputusan dibuat manusia, bukan ditebak AI diam-diam.</p>
+</div>
+<div style="display:flex;flex-direction:column;gap:12px;background:#f8f5f3;border:1px solid #cdc3bd;border-radius:12px;padding:40px">
+<h3 style="font-family:'Fira Sans', Arial, sans-serif;font-size:40px;font-weight:600;color:#0f2e36">3. MCP untuk konteks</h3>
+<p style="font-size:30px;line-height:1.45">Dokumentasi terbaru dan desain asli, bukan ingatan model.</p>
+</div>
+<div style="display:flex;flex-direction:column;gap:12px;background:#f8f5f3;border:1px solid #cdc3bd;border-radius:12px;padding:40px">
+<h3 style="font-family:'Fira Sans', Arial, sans-serif;font-size:40px;font-weight:600;color:#0f2e36">4. Review setiap langkah</h3>
+<p style="font-size:30px;line-height:1.45">Skenario uji dari spec membuktikan hasilnya benar.</p>
+</div>
+</div>
+
+</section></div>
+<div class="slide" data-index="33"><section id="tips" style="background:#ede7e3;color:#21414a;font-family:Lato, Arial, sans-serif;padding:128px;display:flex;flex-direction:column;gap:48px">
+<p style="font-family:'Roboto Mono', 'Courier New', monospace;font-size:24px;letter-spacing:2px;text-transform:uppercase;color:#16697a">Di proyek nyata</p>
+<h2 style="font-family:'Fira Sans', Arial, sans-serif;font-size:64px;font-weight:700;line-height:1.1;color:#0f2e36">Mulai kecil, mulai Senin depan</h2>
+<table style="font-size:30px;color:#21414a;width:1664px">
+<tr style="background:#e3dbd6"><th style="width:34%;text-align:left">Lakukan</th><th style="width:66%;text-align:left">Kenapa</th></tr>
+<tr><td>Satu fitur kecil dulu</td><td>Rasakan alurnya sebelum mengubah cara kerja tim</td></tr>
+<tr style="background:#f8f5f3"><td>Satu spec per kebutuhan</td><td>Spec kecil lebih mudah dijelaskan, direview, dan diuji</td></tr>
+<tr><td>Konstitusi dari standar tim</td><td>Aturan yang sudah disepakati menjadi gerbang otomatis</td></tr>
+<tr style="background:#f8f5f3"><td>Review spec seperti code</td><td>Kesalahan di spec paling murah diperbaiki</td></tr>
+<tr><td>Commit per langkah</td><td>Setiap artefak bisa dibandingkan dan dikembalikan</td></tr>
+<tr style="background:#f8f5f3"><td>Harapkan hasil berbeda</td><td>AI non-deterministik; spec menjaga arah tetap sama</td></tr>
+</table>
+
+</section></div>
+<div class="slide" data-index="34"><section id="closing" data-transition="fade" style="background:#16697a;color:#f8f5f3;font-family:Lato, Arial, sans-serif;padding:128px;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:40px">
+<div style="width:160px;height:12px;background:#ffa62b;border-radius:6px"></div>
+<h2 style="font-family:'Fira Sans', Arial, sans-serif;font-size:104px;font-weight:700;line-height:1.05;color:#f8f5f3;text-align:center">Tanya jawab</h2>
+<p style="font-size:40px;line-height:1.4;color:#f8f5f3;text-align:center;width:1400px">Code demo, catatan, dan materi lanjutan:</p>
+<p style="font-family:'Fira Sans', Arial, sans-serif;font-size:64px;font-weight:700;color:#0f2e36;background:#ffa62b;border-radius:12px;padding:24px 56px">timpamungkas.github.io</p>
+<p style="font-size:32px;color:#f8f5f3;text-align:center">Terima kasih · Timotius Pamungkas</p>
+
+</section></div>
+</div>
+<div id="counter"></div>
+<div id="prompt-panel" hidden role="dialog" aria-modal="true" aria-labelledby="prompt-title">
+  <div class="panel">
+    <header><h2 id="prompt-title"></h2><span>M atau Esc untuk menutup</span></header>
+    <div id="prompt-body"></div>
+  </div>
+</div>
+<script type="application/json" id="prompt-data">{"15":[{"kind":"code","lang":"bash","text":"specify check"},{"kind":"code","lang":"text","text":"/mcp"}],"17":[{"kind":"code","lang":"bash","text":"specify init --here"},{"kind":"code","lang":"text","text":"/speckit-constitution Buat konstitusi untuk backend Xarent, aplikasi rental mobil.\n\nKonteks: REST API untuk website rental mobil. Stack sudah ditetapkan: Spring Boot 4, Java 25, Maven wrapper, PostgreSQL 18 yang berjalan di Docker Compose. Frontend React terpisah akan memakai API ini.\n\nPrinsip:\n1. Spec lebih dulu. Tidak ada code untuk perilaku yang tidak ada di spec yang sudah disetujui. Kalau spec tidak jelas, tanyakan, jangan menebak.\n2. API lebih dulu. Setiap endpoint dijelaskan dalam kontrak OpenAPI 3.1 sebelum diimplementasikan. Kontrak inilah acuan frontend.\n3. Berlapis dan sederhana. Controller, service, repository. DTO request dan response di batas API; entity JPA tidak pernah keluar dari service layer. Tanpa microservice, tanpa messaging, tanpa autentikasi di versi ini.\n4. Perubahan database hanya lewat migrasi Flyway. Hibernate tidak boleh membuat atau mengubah skema.\n5. Validasi di batas API dengan Jakarta Bean Validation. Error memakai RFC 9457 Problem Details dengan error code yang stabil.\n6. Uang memakai BigDecimal di Java dan numeric(12,2) di database. Tanggal dan waktu memakai tipe java.time dan disimpan dalam UTC.\n7. Perilaku bisa diverifikasi. Setiap aturan bisnis di spec punya skenario penerimaan dalam format Given/When/Then.\n8. Dokumentasi terkini. Gunakan Context7 untuk mengecek API Spring Boot 4 dan Spring Framework 7, jangan mengandalkan ingatan.\n\nTata kelola: konstitusi mengalahkan spec atau plan mana pun. Setiap perubahan perlu kenaikan versi dan alasan singkat."}],"20":[{"kind":"code","lang":"text","text":"/speckit-specify Fitur: daftar mobil untuk API website rental mobil Xarent. Pengunjung tanpa login melihat armada mobil yang bisa disewa.\n\nKebutuhan:\n- Setiap mobil di daftar punya: identifier, nama, tipe, jumlah kursi, deskripsi mesin, harga per jam dalam USD, dan URL foto.\n- Tipe mobil adalah daftar tetap: Compact, Sedan, SUV, MPV.\n- Daftar diurutkan dari harga per jam termurah; kalau harganya sama, urut nama A sampai Z.\n- Pengunjung bisa memfilter daftar dengan tepat satu tipe. Tanpa filter, semua mobil tampil.\n- Filter dengan tipe yang valid tapi tidak punya mobil menghasilkan daftar kosong, bukan error.\n- Filter dengan tipe di luar daftar ditolak dengan pesan yang menyebut tipe yang valid.\n- Data awal: 4 mobil dari desain Figma (Vord Giesta, BMV 3 Series, Royota Camry, Fonda Sivic) ditambah 1 mobil SUV dan 1 mobil MPV fiktif.\n\nDi luar cakupan fitur ini: detail satu mobil, booking, cabang, pagination, pencarian teks, login."},{"kind":"code","lang":"text","text":"/speckit-clarify"}],"21":[{"kind":"code","lang":"text","text":"/speckit-plan Spring Boot 4 (versi GA terbaru di start.spring.io), Java 25, Maven wrapper, PostgreSQL 18 di Docker Compose (aplikasi dijalankan dengan mvnw, bukan di container), Flyway untuk skema dan data awal, springdoc-openapi untuk Swagger UI. Gunakan Context7 untuk memastikan nama starter dan API Spring Boot 4. Hasilkan kontrak OpenAPI untuk endpoint daftar mobil; kontrak ini akan dipakai frontend React."}],"22":[{"kind":"code","lang":"text","text":"/speckit-tasks Code tes otomatis di luar cakupan versi ini; verifikasinya adalah quickstart dan skenario Given/When/Then."},{"kind":"code","lang":"text","text":"/speckit-analyze"},{"kind":"code","lang":"text","text":"/speckit-implement"},{"kind":"code","lang":"bash","text":"docker compose up -d --wait\n./mvnw spring-boot:run"}],"23":[{"kind":"code","lang":"text","text":"/speckit-specify Fitur: detail satu mobil, melanjutkan fitur daftar mobil. Pengunjung tanpa login membuka satu mobil berdasarkan identifier-nya untuk memutuskan apakah akan menyewa.\n\nKebutuhan:\n- Detail berisi semua atribut di daftar mobil, ditambah deskripsi (satu paragraf), daftar fitur (misalnya AC, Bluetooth, kamera mundur), rating 0.0 sampai 5.0 dengan satu angka desimal, dan jumlah ulasan.\n- Mobil yang belum punya ulasan tampil dengan rating 0.0 dan jumlah ulasan 0.\n- Identifier yang tidak ada menghasilkan respons \"mobil tidak ditemukan\" yang menyebut identifier tersebut.\n- Identifier dengan format tidak valid ditolak dengan pesan yang jelas, berbeda dari \"tidak ditemukan\".\n- Data awal: lengkapi keenam mobil dari fitur daftar mobil dengan deskripsi, fitur, rating, dan jumlah ulasan.\n\nDi luar cakupan: menulis ulasan, booking, ketersediaan mobil, galeri foto lebih dari satu."},{"kind":"code","lang":"text","text":"/speckit-clarify"},{"kind":"code","lang":"text","text":"/speckit-plan Pakai stack dan struktur package dari fitur daftar mobil; jangan menambah dependency baru. Tambahkan kolom lewat migrasi Flyway baru, jangan mengubah migrasi yang sudah ada. Perbarui kontrak OpenAPI dengan endpoint detail mobil."},{"kind":"code","lang":"text","text":"/speckit-tasks Code tes otomatis di luar cakupan versi ini; verifikasinya adalah quickstart dan skenario Given/When/Then."},{"kind":"code","lang":"text","text":"/speckit-implement"}],"24":[{"kind":"code","lang":"text","text":"/speckit-specify Fitur: booking mobil, melanjutkan fitur daftar mobil dan detail mobil. Pengunjung tanpa login memesan satu mobil dan langsung mendapat konfirmasi.\n\nKebutuhan:\n- Form booking berisi: mobil, nama pelanggan (2 sampai 100 karakter), nomor HP Indonesia, cabang pengambilan, tanggal dan jam pengambilan, serta tanggal dan jam pengembalian.\n- Cabang pengambilan dipilih dari daftar tetap: Jakarta Pusat, Jakarta Selatan, Bandara Soekarno-Hatta. API menyediakan daftar cabang ini.\n- Satu mobil tidak boleh dibooking ganda: booking yang waktunya bentrok dengan booking lain untuk mobil yang sama ditolak, termasuk saat dua booking dikirim bersamaan.\n- Booking yang berhasil langsung berstatus terkonfirmasi dan mendapat booking code unik yang mudah dibaca, misalnya XR-7K2Q9D.\n- Konfirmasi menampilkan booking code, mobil, cabang, waktu pengambilan dan pengembalian, jumlah jam tertagih, dan total harga (jam tertagih × harga per jam mobil).\n- Pengunjung bisa melihat kembali booking berdasarkan booking code.\n- Setiap penolakan menyebut alasannya dalam bahasa yang mudah dipahami, beserta field atau aturan yang gagal.\n\nDi luar cakupan: pembayaran, pembatalan, perubahan booking, akun pelanggan, notifikasi."},{"kind":"code","lang":"text","text":"/speckit-clarify"},{"kind":"code","lang":"text","text":"/speckit-plan Pakai stack dan struktur dari fitur daftar mobil dan detail mobil. Cegah double booking di database, bukan hanya di Java, supaya booking yang dikirim bersamaan tetap aman. Pakai Clock yang bisa diganti untuk aturan berbasis waktu. Tambahkan tabel lewat migrasi Flyway baru. Perbarui kontrak OpenAPI dengan endpoint cabang dan booking."},{"kind":"code","lang":"text","text":"/speckit-tasks Code tes otomatis di luar cakupan versi ini; verifikasinya adalah quickstart dan skenario Given/When/Then."},{"kind":"code","lang":"text","text":"/speckit-analyze"},{"kind":"code","lang":"text","text":"/speckit-implement"}],"27":[{"kind":"code","lang":"bash","text":"mkdir -p contracts && curl -s http://localhost:8080/v3/api-docs.yaml -o contracts/xarent-api.yaml"},{"kind":"code","lang":"bash","text":"specify init --here"},{"kind":"code","lang":"text","text":"/speckit-constitution Buat konstitusi untuk frontend website rental mobil Xarent. Stack: React, TypeScript, Vite, Tailwind CSS, React Router. Prinsip: spec lebih dulu; kontrak backend di contracts/xarent-api.yaml adalah satu-satunya sumber untuk endpoint, field, dan error code, dan aturan bisnis tetap di API; tampilan mengikuti desain Figma Xarent yang dibaca lewat Figma MCP, dan setiap penyimpangan dicatat di plan; komponen fungsi yang sederhana, tanpa library state global; setiap tampilan data punya state loading, kosong, dan error; aksesibel sejak awal (label, fokus, kontras); setiap user story punya skenario Given/When/Then yang bisa ditunjukkan di browser; cek API library lewat Context7."},{"kind":"code","lang":"text","text":"/speckit-specify Fitur: halaman Our Cars di website Xarent, berdasarkan frame \"Our Cars\" di desain Figma dan endpoint daftar mobil di contracts/xarent-api.yaml.\n\nKebutuhan:\n- Halaman di /cars menampilkan setiap mobil sebagai kartu: foto, nama, tipe, jumlah kursi, mesin, dan harga per jam dalam USD, mengikuti desain Figma.\n- Di atas daftar ada chip filter tipe: All, Compact, Sedan, SUV, MPV. Chip yang aktif terlihat jelas, dan filter tercermin di URL (misalnya /cars?type=SUV) supaya bisa dibagikan.\n- Urutan mobil mengikuti respons API; frontend tidak mengurutkan ulang.\n- Saat data dimuat tampil kerangka kartu; saat daftar kosong tampil pesan \"Belum ada mobil untuk tipe ini\"; saat API gagal tampil pesan error dengan tombol \"Coba lagi\".\n- Setiap kartu bisa dibuka dengan klik atau keyboard menuju /cars/{id}; halaman tujuan dibangun di fitur berikutnya.\n- Navigasi dan footer mengikuti desain Figma.\n\nDi luar cakupan: halaman detail, form booking, pagination dari desain, pencarian."},{"kind":"code","lang":"text","text":"/speckit-clarify"}],"28":[{"kind":"code","lang":"text","text":"/speckit-plan React + Vite + TypeScript + Tailwind CSS 4 + React Router. Baca design token dan aset dari file Figma Xarent lewat Figma MCP: https://www.figma.com/design/IgAv2RyZQZlHaWHXPiztCh/Xarent"},{"kind":"code","lang":"text","text":"/speckit-tasks"},{"kind":"code","lang":"text","text":"/speckit-implement Gunakan Figma MCP untuk frame \"Our Cars\" di https://www.figma.com/design/IgAv2RyZQZlHaWHXPiztCh/Xarent"},{"kind":"code","lang":"bash","text":"npm install\nnpm run dev"}],"29":[{"kind":"code","lang":"text","text":"/speckit-specify Fitur: halaman Car Detail di /cars/{id}, berdasarkan frame \"Car Detail\" di desain Figma dan endpoint detail mobil di contracts/xarent-api.yaml. Melanjutkan fitur halaman Our Cars.\n\nKebutuhan:\n- Menampilkan foto besar, nama, tipe, jumlah kursi, mesin, harga per jam, deskripsi, daftar fitur, rating dengan satu angka desimal, dan jumlah ulasan, mengikuti desain.\n- Tombol \"Book this car\" membuka halaman booking di /book dengan mobil ini sudah terpilih; halaman booking dibangun di fitur berikutnya.\n- Tautan kembali ke /cars mempertahankan filter tipe yang terakhir dipilih.\n- Identifier yang tidak ditemukan menampilkan tampilan \"Mobil tidak ditemukan\" dengan tautan ke /cars; error lain tampil dengan tombol \"Coba lagi\".\n- Saat data dimuat tampil kerangka dengan tata letak yang sama.\n\nDi luar cakupan: ulasan, galeri foto, ketersediaan mobil."},{"kind":"code","lang":"text","text":"/speckit-plan Pakai stack, komponen, dan design token dari halaman Our Cars; tambahkan hanya yang dibutuhkan halaman ini."},{"kind":"code","lang":"text","text":"/speckit-implement Gunakan Figma MCP untuk frame \"Car Detail\" di https://www.figma.com/design/IgAv2RyZQZlHaWHXPiztCh/Xarent"}],"30":[{"kind":"code","lang":"text","text":"/speckit-specify Fitur: halaman booking di /book, berdasarkan frame \"Section Rent a Car\" di desain Figma dan endpoint cabang serta booking di contracts/xarent-api.yaml. Melanjutkan halaman Our Cars dan Car Detail.\n\nKebutuhan:\n- Form berisi semua field yang diminta API: mobil, nama, nomor HP, cabang pengambilan, tanggal dan jam pengambilan, serta tanggal dan jam pengembalian.\n- Kalau dibuka dari Car Detail, mobil sudah terpilih; pengunjung tetap bisa menggantinya.\n- Daftar mobil dan cabang diambil dari API, tidak ditulis di code.\n- Browser hanya memvalidasi field wajib dan format. Aturan bisnis (bentrok, batas waktu, durasi) tetap diputuskan API, dan alasan dari API ditampilkan di field yang bersangkutan atau di atas form.\n- Tombol kirim nonaktif dan menampilkan status selama permintaan berjalan, supaya booking tidak terkirim dua kali.\n- Setelah berhasil, form diganti panel konfirmasi berisi booking code, mobil, cabang, waktu, jam tertagih, total, dan tombol \"Book another car\".\n\nDi luar cakupan: pembayaran, akun, mengubah atau membatalkan booking."},{"kind":"code","lang":"text","text":"/speckit-clarify"},{"kind":"code","lang":"text","text":"/speckit-plan Pakai stack, komponen, dan design token dari dua halaman sebelumnya; tambahkan hanya yang dibutuhkan halaman ini."},{"kind":"code","lang":"text","text":"/speckit-implement Gunakan Figma MCP untuk frame \"Section Rent a Car\" di https://www.figma.com/design/IgAv2RyZQZlHaWHXPiztCh/Xarent"}],"31":[{"kind":"code","lang":"text","text":"Dari specs/003-booking-mobil/spec.md, tulis skenario tes Given/When/Then untuk setiap functional requirement dan edge case, termasuk kasus batas. Sebutkan requirement yang dibuktikan oleh setiap skenario. Simpan sebagai specs/003-booking-mobil/test-scenarios.md. Jangan menulis code tes."}]}</script>
+<script>
+  const slides = [...document.querySelectorAll('.slide')];
+  const stage = document.getElementById('stage');
+  const counter = document.getElementById('counter');
+  const promptPanel = document.getElementById('prompt-panel');
+  const promptBody = document.getElementById('prompt-body');
+  const prompts = JSON.parse(document.getElementById('prompt-data').textContent);
+  let current = 0;
+
+  function element(tag, text, className) {
+    const node = document.createElement(tag);
+    if (text !== undefined) node.textContent = text;
+    if (className) node.className = className;
+    return node;
+  }
+
+  async function copy(text, button) {
+    try {
+      await navigator.clipboard.writeText(text);
+    } catch {
+      const area = element('textarea');
+      area.value = text;
+      document.body.append(area);
+      area.select();
+      document.execCommand('copy');
+      area.remove();
+    }
+    button.textContent = 'Tersalin';
+    setTimeout(() => { button.textContent = 'Salin'; }, 1500);
+  }
+
+  function openPrompts() {
+    const items = prompts[current];
+    if (!items) return;
+    document.getElementById('prompt-title').textContent = 'Prompt · slide ' + (current + 1);
+    promptBody.replaceChildren(...items.map((item) => {
+      const block = element('div', undefined, 'block');
+      if (item.kind === 'table') {
+        block.append(element('div', 'SARAN JAWABAN CLARIFY', 'label'));
+        const table = element('table');
+        item.rows.forEach((row, r) => {
+          const tr = element('tr');
+          row.forEach((cell) => tr.append(element(r === 0 ? 'th' : 'td', cell)));
+          table.append(tr);
+        });
+        block.append(table);
+        return block;
+      }
+      const head = element('div', undefined, 'block-head');
+      const button = element('button', 'Salin');
+      button.type = 'button';
+      button.addEventListener('click', () => copy(item.text, button));
+      head.append(element('span', item.lang === 'bash' ? 'TERMINAL' : 'CLAUDE CODE', 'label'), button);
+      block.append(head, element('pre', item.text));
+      return block;
+    }));
+    promptPanel.hidden = false;
+    promptPanel.querySelector('button')?.focus();
+  }
+
+  function closePrompts() { promptPanel.hidden = true; }
+
+  function fit() {
+    const scale = Math.min(innerWidth / 1920, innerHeight / 1080);
+    stage.style.transform = 'translate(-50%, -50%) scale(' + scale + ')';
+  }
+
+  function show(index) {
+    current = Math.max(0, Math.min(slides.length - 1, index));
+    slides.forEach((slide, i) => slide.classList.toggle('active', i === current));
+    renderCounter();
+    history.replaceState(null, '', '#' + (current + 1));
+  }
+
+  addEventListener('keydown', (event) => {
+    if (!promptPanel.hidden) {
+      if (['m', 'M', 'Escape'].includes(event.key)) { closePrompts(); event.preventDefault(); }
+      return;
+    }
+    if (event.key === 'm' || event.key === 'M') openPrompts();
+    else if (['ArrowRight', 'PageDown', ' ', 'Enter'].includes(event.key)) show(current + 1);
+    else if (['ArrowLeft', 'PageUp', 'Backspace'].includes(event.key)) show(current - 1);
+    else if (event.key === 'Home') show(0);
+    else if (event.key === 'End') show(slides.length - 1);
+    else if (event.key === 'f' || event.key === 'F') document.documentElement.requestFullscreen?.();
+    else return;
+    event.preventDefault();
+  });
+  addEventListener('click', (event) => {
+    if (!promptPanel.hidden) {
+      if (!event.target.closest('.panel')) closePrompts();
+      return;
+    }
+    if (!event.target.closest('a')) show(current + 1);
+  });
+  addEventListener('resize', fit);
+
+  const startedAt = Date.now();
+  const pad = (n) => String(n).padStart(2, '0');
+  function renderCounter() {
+    const minutes = Math.floor((Date.now() - startedAt) / 60000);
+    counter.textContent = 'slide ' + pad(current + 1) + ' - ' + pad(Math.floor(minutes / 60)) + ':' + pad(minutes % 60);
+  }
+  setInterval(renderCounter, 1000);
+
+  fit();
+  show((parseInt(location.hash.slice(1), 10) || 1) - 1);
+</script>
+</body>
+</html>

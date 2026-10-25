@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Workshop | Timotius Pamungkas</title>
+<meta name="description" content="Workshop online yang dibawakan Timotius Pamungkas, lengkap dengan materinya.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bitter:wght@600;700&family=Work+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cerulean: #0081A7;
+    --tropical-teal: #00AFB9;
+    --light-yellow: #FDFCDC;
+    --soft-apricot: #FED9B7;
+    --vibrant-coral: #F07167;
+    --deep-sea: #123A47;
+
+    --paper: var(--light-yellow);
+    --ink: color-mix(in srgb, var(--deep-sea) 88%, var(--light-yellow) 12%);
+    --ink-strong: var(--deep-sea);
+    --ink-soft: color-mix(in srgb, var(--deep-sea) 78%, var(--light-yellow) 22%);
+    --line: color-mix(in srgb, var(--deep-sea) 16%, transparent);
+    --primary: color-mix(in srgb, var(--cerulean) 82%, var(--deep-sea) 18%);
+    --on-primary: var(--light-yellow);
+    --mark: var(--soft-apricot);
+    --focus: var(--tropical-teal);
+    color-scheme: light;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font: 400 1rem/1.6 "Work Sans", system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  @media (min-width: 768px) { body { font-size: 1.125rem; } }
+  h1, h2, h3 { font-family: "Bitter", Georgia, serif; color: var(--ink-strong); margin: 0; }
+  p { margin: 0; }
+  a { color: var(--primary); text-decoration-thickness: 1px; text-underline-offset: 3px; }
+  a:hover { text-decoration-thickness: 2px; }
+  :focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; border-radius: 4px; }
+
+  .wrap { width: 100%; max-width: 1080px; margin: 0 auto; padding: 0 16px; }
+  @media (min-width: 768px) { .wrap { padding: 0 24px; } }
+
+  .skip {
+    position: absolute; left: 16px; top: -48px; z-index: 10;
+    background: var(--primary); color: var(--on-primary);
+    padding: 8px 16px; border-radius: 6px; text-decoration: none;
+  }
+  .skip:focus { top: 12px; }
+
+  header { border-bottom: 1px solid var(--line); }
+  .nav { display: flex; align-items: center; justify-content: space-between; gap: 16px; height: 64px; }
+  .brand { font-family: "Bitter", Georgia, serif; font-weight: 700; font-size: 1.0625rem; color: var(--ink-strong); text-decoration: none; }
+  .lang { display: inline-flex; border: 1.5px solid var(--line); border-radius: 6px; overflow: hidden; }
+  .lang button {
+    font: 500 0.8125rem/1 "IBM Plex Mono", ui-monospace, monospace;
+    color: var(--ink); background: transparent; border: 0; cursor: pointer;
+    min-width: 40px; height: 36px; padding: 0 10px;
+  }
+  .lang button[aria-pressed="true"] { background: var(--primary); color: var(--on-primary); }
+
+  main { padding: 48px 0 96px; }
+  @media (min-width: 768px) { main { padding: 72px 0 120px; } }
+  .back { font-size: 0.9375rem; font-weight: 500; }
+  h1 { margin-top: 24px; font-size: clamp(2rem, 5vw, 2.75rem); line-height: 1.1; }
+  .intro { margin-top: 16px; max-width: 62ch; }
+
+  .workshops { list-style: none; margin: 40px 0 0; padding: 0; border-top: 1px solid var(--line); }
+  .workshop { display: grid; gap: 8px 24px; padding: 28px 0; border-bottom: 1px solid var(--line); }
+  @media (min-width: 768px) { .workshop { grid-template-columns: 200px 1fr; } }
+  .ws-when { font: 500 0.875rem/1.6 "IBM Plex Mono", ui-monospace, monospace; color: var(--ink-soft); }
+  .ws-meta {
+    display: flex; flex-wrap: wrap; align-items: center; gap: 4px 12px; margin-bottom: 6px;
+    font: 500 0.8125rem/1.4 "IBM Plex Mono", ui-monospace, monospace;
+    letter-spacing: 0.04em; text-transform: uppercase; color: var(--primary);
+  }
+  .ws-badge { padding: 2px 8px; border-radius: 999px; background: var(--mark); color: var(--ink-strong); }
+  .workshop h2 { font-size: 1.375rem; line-height: 1.3; }
+  .ws-links { display: flex; flex-wrap: wrap; gap: 8px 24px; margin-top: 14px; }
+  .ws-links a { font-weight: 600; }
+</style>
+</head>
+<body>
+<a class="skip" href="#main" data-i18n="skip">Langsung ke konten</a>
+
+<header>
+  <div class="wrap nav">
+    <a class="brand" href="../index.html">Timotius Pamungkas</a>
+    <div class="lang" role="group" aria-label="Bahasa / Language">
+      <button type="button" data-lang="id" aria-pressed="true" lang="id" aria-label="Bahasa Indonesia">ID</button>
+      <button type="button" data-lang="en" aria-pressed="false" lang="en" aria-label="English">EN</button>
+    </div>
+  </div>
+</header>
+
+<main id="main" class="wrap">
+  <a class="back" href="../index.html" data-i18n="back">&larr; Beranda</a>
+  <h1 data-i18n="wsTitle">Workshop</h1>
+  <p class="intro" data-i18n="wsIntro">Sesi online yang saya bawakan. Materi tiap sesi bisa dibuka dari tautan di bawahnya.</p>
+
+  <!--
+    Newest first. To add a session, copy one <li class="workshop"> and add its i18n keys in the script below.
+    data-date:      workshop date (WIB, YYYY-MM-DD). Materials appear the day after this date.
+    data-end:       end time. The "Upcoming" badge shows until then, and nothing shows after.
+    data-materials: path to the materials. It is only linked once the release time has passed.
+  -->
+  <ol class="workshops">
+    <li class="workshop" data-date="2026-10-28" data-end="2026-10-28T21:00:00+07:00" data-materials="detikcourse-2026-10-28/index-id.html">
+      <p class="ws-when"><time datetime="2026-10-28T19:00:00+07:00" data-i18n="ws1When">Rabu, 28 Okt 2026<br>19.00 - 21.00 WIB</time></p>
+      <div>
+        <p class="ws-meta"><span>detikcourse</span><span data-i18n="wsOnline">Online via Zoom</span></p>
+        <h2>Optimalkan AI untuk Bikin Software Sesuai Kebutuhan Kerja</h2>
+        <div class="ws-links">
+          <a href="https://event.detik.com/1544/detikcourse---optimalkan-ai-untuk-bikin-software-sesuai-kebutuhan-kerja" target="_blank" rel="noopener" data-i18n="wsEventPage">Halaman event</a>
+        </div>
+      </div>
+    </li>
+  </ol>
+</main>
+
+<script>
+  const copy = {
+    id: {
+      skip: "Langsung ke konten", back: "&larr; Beranda",
+      wsTitle: "Workshop",
+      wsIntro: "Sesi online yang saya bawakan. Materi tiap sesi bisa dibuka dari tautan di bawahnya.",
+      wsOnline: "Online via Zoom", wsUpcoming: "Akan datang",
+      wsResources: "Materi (slide)", wsEventPage: "Halaman event",
+      ws1When: "Rabu, 28 Okt 2026<br>19.00 - 21.00 WIB",
+      description: "Workshop online yang dibawakan Timotius Pamungkas, lengkap dengan materinya."
+    },
+    en: {
+      skip: "Skip to content", back: "&larr; Home",
+      wsTitle: "Workshops",
+      wsIntro: "Online sessions I run. Each session links to its materials.",
+      wsOnline: "Online via Zoom", wsUpcoming: "Upcoming",
+      wsResources: "Resources (slides, Indonesian)", wsEventPage: "Event page",
+      ws1When: "Wed, 28 Oct 2026<br>19:00 - 21:00 WIB (UTC+7)",
+      description: "Online workshops run by Timotius Pamungkas, with their materials."
+    }
+  };
+
+  const store = {
+    get(k) { try { return localStorage.getItem(k); } catch { return null; } },
+    set(k, v) { try { localStorage.setItem(k, v); } catch {} }
+  };
+
+  function setLang(lang) {
+    const t = copy[lang] || copy.id;
+    document.documentElement.lang = lang;
+    document.querySelectorAll("[data-i18n]").forEach(el => { el.innerHTML = t[el.dataset.i18n]; });
+    document.querySelector('meta[name="description"]').content = t.description;
+    document.title = t.wsTitle + " | Timotius Pamungkas";
+    document.querySelectorAll("[data-lang]").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.lang === lang)));
+  }
+
+  document.querySelectorAll("[data-lang]").forEach(b => b.addEventListener("click", () => {
+    setLang(b.dataset.lang);
+    store.set("lang", b.dataset.lang);
+  }));
+  // Time-based parts are rendered here, so adding a session needs no manual status edits.
+  const DAY = 24 * 60 * 60 * 1000;
+  document.querySelectorAll(".workshop").forEach(li => {
+    const now = Date.now();
+
+    if (now < new Date(li.dataset.end).getTime()) {
+      const badge = document.createElement("span");
+      badge.className = "ws-badge";
+      badge.dataset.i18n = "wsUpcoming";
+      li.querySelector(".ws-meta").append(badge);
+    }
+
+    const releaseAt = new Date(li.dataset.date + "T00:00:00+07:00").getTime() + DAY;
+    if (li.dataset.materials && now >= releaseAt) {
+      const link = document.createElement("a");
+      link.href = li.dataset.materials;
+      link.dataset.i18n = "wsResources";
+      li.querySelector(".ws-links").prepend(link);
+    }
+  });
+  setLang(store.get("lang") === "en" ? "en" : "id");
+</script>
+</body>
+</html>

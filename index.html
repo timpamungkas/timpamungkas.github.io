@@ -202,6 +202,8 @@
   .topic p { max-width: 56ch; }
   .topic a { font-weight: 600; white-space: nowrap; }
 
+  .ws-link { font-weight: 600; }
+
   .note { margin-top: 12px; font-size: 0.9375rem; line-height: 1.5; color: var(--ink-soft); max-width: 36ch; }
 
   footer { border-top: 1px solid var(--line); padding: 32px 0; font-size: 0.9375rem; color: var(--ink-soft); }
@@ -220,6 +222,7 @@
         <li><a href="#pengalaman" data-i18n="navExp">Pengalaman</a></li>
         <li><a href="#topik" data-i18n="navTopics">Topik</a></li>
         <li><a href="https://www.udemy.com/user/timotius-pamungkas" target="_blank" rel="noopener">Udemy</a></li>
+        <li><a href="workshops/index.html" data-i18n="navWorkshop">Workshop</a></li>
       </ul>
       <div class="controls">
         <div class="lang" role="group" aria-label="Bahasa / Language">
@@ -321,6 +324,16 @@
     </div>
   </section>
 
+  <section class="block" id="workshop" aria-labelledby="ws-h">
+    <div class="split">
+      <h2 id="ws-h" data-i18n="wsTitle">Workshop</h2>
+      <div class="prose">
+        <p data-i18n="wsLead">Semua workshop yang saya bawakan, lengkap dengan materinya.</p>
+        <p><a class="ws-link" href="workshops/index.html" data-i18n="wsAll">Lihat daftar workshop</a></p>
+      </div>
+    </div>
+  </section>
+
   </div>
 </main>
 
@@ -328,6 +341,7 @@
   <div class="wrap foot">
     <span>&copy; <span id="year">2026</span> Timotius Pamungkas</span>
     <a href="https://www.udemy.com/user/timotius-pamungkas" target="_blank" rel="noopener" data-i18n="footUdemy">Profil Udemy</a>
+    <a href="workshops/index.html" data-i18n="navWorkshop">Workshop</a>
   </div>
 </footer>
 
@@ -335,7 +349,7 @@
   const copy = {
     id: {
       skip: "Langsung ke konten",
-      navAbout: "Tentang", navExp: "Pengalaman", navTopics: "Topik",
+      navAbout: "Tentang", navExp: "Pengalaman", navTopics: "Topik", navWorkshop: "Workshop",
       expTitle: "Pengalaman", expNow: "Saat ini", expPast: "Sebelumnya",
       eyebrow: "Instruktur Udemy",
       lead: "System architect dan engineering manager yang mengajar dari pengalaman nyata di dunia kerja.",
@@ -354,13 +368,16 @@
       t3Title: "Cloud &amp; DevOps",
       t3Body: "Container, CI/CD, dan infrastruktur cloud: cara membawa aplikasi dari laptop sampai ke produksi.",
       seeCourses: "Lihat kursus",
+      wsTitle: "Workshop",
+      wsLead: "Semua workshop yang saya bawakan, lengkap dengan materinya.",
+      wsAll: "Lihat daftar workshop",
       ctaBody: "Semua kursus saya ada di satu tempat. Pilih topik yang Anda butuhkan sekarang.",
       footUdemy: "Profil Udemy",
       description: "Timotius Pamungkas: system architect dan engineering manager yang mengajar software engineering, AI & otomasi, serta cloud & DevOps di Udemy."
     },
     en: {
       skip: "Skip to content",
-      navAbout: "About", navExp: "Experience", navTopics: "Topics",
+      navAbout: "About", navExp: "Experience", navTopics: "Topics", navWorkshop: "Workshop",
       expTitle: "Experience", expNow: "Current", expPast: "Previously",
       eyebrow: "Udemy instructor",
       lead: "A system architect and engineering manager who teaches from real-world experience.",
@@ -379,6 +396,9 @@
       t3Title: "Cloud &amp; DevOps",
       t3Body: "Containers, CI/CD and cloud infrastructure: how to take an app from your laptop to production.",
       seeCourses: "See courses",
+      wsTitle: "Workshops",
+      wsLead: "All the workshops I have run, with their materials.",
+      wsAll: "See the workshop list",
       ctaBody: "All my courses are in one place. Pick the topic you need right now.",
       footUdemy: "Udemy profile",
       description: "Timotius Pamungkas: system architect and engineering manager teaching software engineering, AI & automation, and cloud & DevOps on Udemy."
@@ -404,8 +424,7 @@
     setLang(b.dataset.lang);
     store.set("lang", b.dataset.lang);
   }));
-  const savedLang = store.get("lang");
-  if (savedLang === "en") setLang("en");
+  setLang(store.get("lang") === "en" ? "en" : "id");
 
   document.getElementById("year").textContent = new Date().getFullYear();
 </script>
