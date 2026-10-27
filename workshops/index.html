@@ -109,9 +109,11 @@
     data-date:      workshop date (WIB, YYYY-MM-DD). Materials appear the day after this date.
     data-end:       end time. The "Upcoming" badge shows until then, and nothing shows after.
     data-materials: path to the materials. It is only linked once the release time has passed.
+    data-course:    URL of the related course. It is linked at the same time as the materials (day after data-date).
   -->
   <ol class="workshops">
-    <li class="workshop" data-date="2026-10-28" data-end="2026-10-28T21:00:00+07:00" data-materials="detikcourse-2026-10-28/index-id.html">
+    <li class="workshop" data-date="2026-10-28" data-end="2026-10-28T21:00:00+07:00" data-materials="detikcourse-2026-10-28/index-id.html"
+        data-course="https://www.udemy.com/course/become-ai-native-engineer-spec-kit-claude-spec-driven-development-sdd/?referralCode=F06C564E03449CFB66CE">
       <p class="ws-when"><time datetime="2026-10-28T19:00:00+07:00" data-i18n="ws1When">Rabu, 28 Okt 2026<br>19.00 - 21.00 WIB</time></p>
       <div>
         <p class="ws-meta"><span>detikcourse</span><span data-i18n="wsOnline">Online via Zoom</span></p>
@@ -131,7 +133,7 @@
       wsTitle: "Workshop",
       wsIntro: "Sesi online yang saya bawakan. Materi tiap sesi bisa dibuka dari tautan di bawahnya.",
       wsOnline: "Online via Zoom", wsUpcoming: "Akan datang",
-      wsResources: "Materi (slide)", wsEventPage: "Halaman event",
+      wsResources: "Materi (slide)", wsEventPage: "Halaman event", wsCourse: "Kursus terkait",
       ws1When: "Rabu, 28 Okt 2026<br>19.00 - 21.00 WIB",
       description: "Workshop online yang dibawakan Timotius Pamungkas, lengkap dengan materinya."
     },
@@ -140,7 +142,7 @@
       wsTitle: "Workshops",
       wsIntro: "Online sessions I run. Each session links to its materials.",
       wsOnline: "Online via Zoom", wsUpcoming: "Upcoming",
-      wsResources: "Resources (slides, Indonesian)", wsEventPage: "Event page",
+      wsResources: "Resources (slides, Indonesian)", wsEventPage: "Event page", wsCourse: "Related course",
       ws1When: "Wed, 28 Oct 2026<br>19:00 - 21:00 WIB (UTC+7)",
       description: "Online workshops run by Timotius Pamungkas, with their materials."
     }
@@ -181,7 +183,16 @@
       const link = document.createElement("a");
       link.href = li.dataset.materials;
       link.dataset.i18n = "wsResources";
-      li.querySelector(".ws-links").prepend(link);
+      li.querySelector(".ws-links").append(link);
+
+      if (li.dataset.course) {
+        const course = document.createElement("a");
+        course.href = li.dataset.course;
+        course.target = "_blank";
+        course.rel = "noopener";
+        course.dataset.i18n = "wsCourse";
+        li.querySelector(".ws-links").append(course);
+      }
     }
   });
   setLang(store.get("lang") === "en" ? "en" : "id");
